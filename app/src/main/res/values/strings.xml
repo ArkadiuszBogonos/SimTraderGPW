@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">SimTraderGPW</string>
+    <string name="image_with_brands_logo">Obraz z logo aplikacji</string>
+    <string name="btn_login">Zaloguj</string>
+    <string name="login">Login</string>
+    <string name="email">Adres e-mail</string>
+    <string name="password">Hasło</string>
+    <string name="confirm_password">Powtórz hasło</string>
+    <string name="singup">Nie masz konta? Utwórz je tutaj!</string>
+    <string name="cancel">Anuluj</string>
+    <string name="signup_btn">Utwórz konto!</string>
+
+    <!--Validation messages-->
+    <string name="incorrect_email_structure">Niepoprawny adres e-mail.</string>
+    <string name="password_too_short">Hasło musi zawierać conajmniej 5 znaków.</string>
+    <string name="incorrect_password_structure">Hasło musi zawierać conajmniej jedną cyfrę i literę.</string>
+    <string name="empty_field">To pole jest wymagane.</string>
+    <string name="field_too_short">Wprowadź więcej znaków.</string>
+    <string name="wrong_credentials">Zły login lub hasło.</string>
+    <string name="different_passwords">Podane hasła nie są identyczne.</string>
+    <string name="email_occupied">Ten email jest już zajęty.</string>
+    <string name="login_occupied">Ta nazwa użytkownika jest już zajęta.</string>
+
+    <!--WIG 20-->
+    <string name="name">Nazwa</string>
+    <string name="ticker">Ticker</string>
+    <string name="last">Kurs</string>
+    <string name="percentage_change">Zmiana w %</string>
+</resources>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CompanyDetailsActivity">
+
+    <View
+        android:id="@+id/act_cdetails_top_beam"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/act_cdetails_ticker_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="KGHM"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_title_background" />
+
+    <TextView
+        android:id="@+id/act_cdetails_cname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="KGHM Polska Miedź SA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_ticker_tv" />
+
+    <TextView
+        android:id="@+id/act_cdetails_last_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="143,60"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_ticker_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_ticker_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_ticker_tv" />
+
+    <TextView
+        android:id="@+id/act_cdetails_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="PLN"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_last_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_last_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_last_tv" />
+
+    <TextView
+        android:id="@+id/act_cdetails_pchange_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1,84%"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_currency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_currency"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_currency" />
+
+    <View
+        android:id="@+id/act_cdetails_change_arrow_img"
+        android:layout_width="24dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_baseline_arrow_drop_up_green_24"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_pchange_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_pchange_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_pchange_tv"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_cname_tv" />
+
+    <TextView
+        android:id="@+id/act_cdetails_owned_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Ilość w portfelu:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/act_cdetails_owned_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text=" 16"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_owned_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_owned_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_owned_tv" />
+
+    <View
+        android:id="@+id/act_cdetails_title_background"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/colorDelicateGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_top_beam" />
+
+    <TextView
+        android:id="@+id/act_cdetails_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Szczegóły spółki"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_title_background"
+        app:layout_constraintEnd_toEndOf="@+id/act_cdetails_title_background"
+        app:layout_constraintStart_toStartOf="@+id/act_cdetails_title_background"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_top_beam" />
+
+    <EditText
+        android:id="@+id/act_cdetails_quantity_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:hint="Ilość"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/act_cdetails_buy_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/act_cdetails_buy_btn"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_default_normal"
+        android:text="Kupno"
+        android:textColor="@color/colorDelicateGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/act_cdetails_sell_btn" />
+
+    <Button
+        android:id="@+id/act_cdetails_sell_btn"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_default_normal"
+        android:text="Sprzedaż"
+        android:textColor="@color/colorDelicateGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/act_cdetails_buy_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="32dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/act_cdetails_quantity_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_owned_tv"
+        app:srcCompat="@drawable/wykres_placeholder" />
+
+    <TextView
+        android:id="@+id/act_cdetails_price_converter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="16 x 143,60 = 2276,60
+"
+        app:layout_constraintBottom_toTopOf="@+id/act_cdetails_quantity_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/act_cdetails_buy_btn"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

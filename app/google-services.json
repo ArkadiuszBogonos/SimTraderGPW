@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "707383028926",
+    "firebase_url": "https://simtradergpw.firebaseio.com",
+    "project_id": "simtradergpw",
+    "storage_bucket": "simtradergpw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707383028926:android:7930221dfab377fa56c2ef",
+        "android_client_info": {
+          "package_name": "com.example.simtradergpw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707383028926-n7foi2u1m9gclr0prn6jl6o1ro4lcp6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgjn8cOI6Fc0U-LsU0QjU1DihbJIsgl5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707383028926-n7foi2u1m9gclr0prn6jl6o1ro4lcp6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
