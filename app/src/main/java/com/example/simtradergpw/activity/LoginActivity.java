@@ -1,6 +1,7 @@
 package com.example.simtradergpw.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import java.sql.Statement;
 
 public class LoginActivity extends AppCompatActivity {
     // Declare variables
+    public static final String SHARED_PREFS = "sharedPrefs";
     public static Connection connection = null;
 
     private EditText mLoginEditText, mPasswordEditText;
@@ -41,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         connectVariablesToGui();
+
+        // Check if connection is ok
+        if (DatabaseConnection.getConnection() == null) {
+            DatabaseConnection.setConnection();
+        }
+
+        if (DatabaseConnection.getConnection() != null) {
+            connection = DatabaseConnection.getConnection();
+        } else {
+            Toast.makeText(this, "Bład połączenia z bazą.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /* ######### CONTROLS ######### */
@@ -124,17 +138,29 @@ public class LoginActivity extends AppCompatActivity {
             ResultSet resultIsUser = statement.executeQuery(sqlIsUser);
 
             if (resultIsUser.next()){
-                String userFname, userLname;
+                String userLogin, userFName, userLName, userEmail;
                 Float userBalance;
                 Integer userId;
 
                 userId = resultIsUser.getInt("us_id");
-                userFname = resultIsUser.getString("us_fname");
-                userLname = resultIsUser.getString("us_lname");
+                userLogin = resultIsUser.getString("us_login");
+                userEmail = resultIsUser.getString("us_email");
+                userFName = resultIsUser.getString("us_fname");
+                userLName = resultIsUser.getString("us_lname");
                 userBalance = resultIsUser.getFloat("us_balance");
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putInt("userId", userId);
+                editor.putString("userLogin", userLogin);
+                editor.putString("userEmail", userEmail);
+                editor.putString("userFName", userFName);
+                editor.putString("userLName", userLName);
+                editor.putFloat("userBalance", userBalance);
+                editor.apply();
 
                 mProgressBar.setVisibility(View.INVISIBLE);
-                openMainActivity(userId, userFname, userLname, userBalance);
+                openMainActivity();
             } else {
 //                mLoginErrorTV.setText(getResources().getString(R.string.wrong_credentials));
                 mProgressBar.setVisibility(View.INVISIBLE);
@@ -152,12 +178,8 @@ public class LoginActivity extends AppCompatActivity {
 
     /* ######### GO TO functions ######### */
     // Go to app's main panel
-    private void openMainActivity(Integer userId, String userFname, String userLname, Float userBalance) {
+    private void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("userFname", userFname);
-        intent.putExtra("userLname", userLname);
-        intent.putExtra("userBalance", userBalance);
         startActivity(intent);
         finish();
     }

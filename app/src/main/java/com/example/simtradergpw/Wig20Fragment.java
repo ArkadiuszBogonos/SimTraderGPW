@@ -4,17 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class Wig20Fragment extends Fragment {
 
-    ListView wig20ListView;
+    RecyclerView wig20RecyclerView;
     ArrayList<StockRecord> mWig20records = null;
 
 
@@ -40,15 +41,19 @@ public class Wig20Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wig20list, container, false);
 
-        wig20ListView = (ListView) view.findViewById(R.id.wig20_listview);
+        wig20RecyclerView = view.findViewById(R.id.wig20_recyclerview);
 
         Thread t = new Thread(mWig20Updater);
         t.start();
+
+
+
         return view;
     }
 
     void showWig20() {
-        Wig20ListViewAdapter adapter = new Wig20ListViewAdapter(getContext(), R.layout.adapter_view_wig20, mWig20records);
-        wig20ListView.setAdapter(adapter);
+        Wig20RecyclerViewAdapter myAdapter = new Wig20RecyclerViewAdapter(getContext(), mWig20records);
+        wig20RecyclerView.setAdapter(myAdapter);
+        wig20RecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

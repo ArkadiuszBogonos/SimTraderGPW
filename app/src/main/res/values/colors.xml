@@ -5,6 +5,11 @@
     <color name="colorPrimaryDark">#2c4a3d</color>
     <color name="colorAccent">#424242</color>
     <color name="colorDelicateGray">#e6e9ed</color>
+    <color name="colorTrendingDown">#EB261B</color>
+    <color name="colorTrendingUp">#83c478</color>
+
+    <color name="colorText">#8A000000</color>
+
 
 
 </resources>

@@ -26,4 +26,7 @@
     <string name="ticker">Ticker</string>
     <string name="last">Kurs</string>
     <string name="percentage_change">Zmiana w %</string>
+
+    <!--Images desciptions-->
+    <string name="img_change_desc">Symbol zmiany procentowej (Może być dodatni, ujemny lub neutralny)</string>
 </resources>

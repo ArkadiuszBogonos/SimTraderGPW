@@ -2,7 +2,6 @@ package com.example.simtradergpw.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.os.Bundle;
@@ -13,9 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.R;
-import com.example.simtradergpw.UserHelperClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -188,145 +185,150 @@ public class SignUpActivity extends AppCompatActivity {
     private void createUser() {
         final String emailInput = mEmailEditText.getText().toString().trim();
         final String loginInput = mLoginEditText.getText().toString().trim();
+        final String passwordInput = mPasswordEditText.getText().toString();
 
         // Display progress bar
         mProgressBar.setVisibility(View.VISIBLE);
 
-        // Check if connection is ok
-//        if (DatabaseConnection.getConnection() == null) {
-//            DatabaseConnection.setConnection();
-//        }
-//
-//        if (DatabaseConnection.getConnection() != null) {
-//            connection = DatabaseConnection.getConnection();
-//        } else {
-//            Toast.makeText(this, "Bład połączenia z bazą.", Toast.LENGTH_SHORT).show();
-//        }
-//        String sqlInsertUser = "INSERT INTO us__users (us_login, us_password, us_balance) VALUES ";
-
-        /*#### Check if emails already exists in database ####*/
         Statement statement = null;
         try {
             statement = LoginActivity.connection.createStatement();
+
+            /*#### Check if login and email are not taken ####*/
             String sqlIsUser = "SELECT * FROM us__users WHERE us_login='" + loginInput + "' OR us_email='" + emailInput + "'";
             ResultSet resultIsUser = statement.executeQuery(sqlIsUser);
 
             if (!resultIsUser.next()){
+                // Create new user
+                DatabaseCommunication.addNewUser(this, loginInput, emailInput, passwordInput);
 
+                // Hide progress bar
+                mProgressBar.setVisibility(View.GONE);
+                Toast.makeText(SignUpActivity.this, "Utworzono nowe konto!", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
+                // Show error
                 String sqlIsLogin = "SELECT * FROM us__users WHERE us_login='" + loginInput +"'";
                 String sqlIsEmail = "SELECT * FROM us__users WHERE us_email='" + emailInput +"'";
                 ResultSet resultIsLogin = statement.executeQuery(sqlIsLogin);
                 ResultSet resultIsEmail = statement.executeQuery(sqlIsEmail);
 
                 if (resultIsLogin.next()){
-
+                    // Show error - login taken
+                    mLoginErrorTV.setText(getResources().getString(R.string.login_occupied));
+                    mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
                 }
 
                 if (resultIsEmail.next()){
-
+                    // Show error - email taken
+                    mEmailErrorTV.setText(getResources().getString(R.string.email_occupied));
+                    mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
                 }
 
+                // Hide progress bar
+                mProgressBar.setVisibility(View.GONE);
             }
 
         } catch (SQLException throwables) {
+            Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();
             throwables.printStackTrace();
         }
 
-        // Check if given email exists in database
-        Query checkEmail = reference.orderByChild("email").equalTo(emailInput);
-
-        checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Check if given login exists
-                    Query checkLogin = reference.orderByChild("login").equalTo(loginInput);
-                    checkLogin.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                // Show error - login taken
-                                mLoginErrorTV.setText(getResources().getString(R.string.login_occupied));
-                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
-                                // Show error - email taken
-                                mEmailErrorTV.setText(getResources().getString(R.string.email_occupied));
-                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
-                                // Hide progress bar
-                                mProgressBar.setVisibility(View.GONE);
-                            } else {
-                                // Clear error panel for login
-                                mLoginErrorTV.setText("");
-                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
-                                // Show error with information that email exists in database
-                                mEmailErrorTV.setText(getResources().getString(R.string.email_occupied));
-                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
-                                // Hide progress bar
-                                mProgressBar.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                } else {
-                    // Check if given login exists
-                    Query checkLogin = reference.orderByChild("login").equalTo(loginInput);
-
-                    checkLogin.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                // Show error - login taken
-                                mLoginErrorTV.setText(getResources().getString(R.string.login_occupied));
-                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
-                                // Clear error panel for email
-                                mEmailErrorTV.setText("");
-                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
-                                // Hide progress bar
-                                mProgressBar.setVisibility(View.GONE);
-                            } else {
-                                // Clear error panel for login
-                                mLoginErrorTV.setText("");
-                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
-                                // Clear error panel for email
-                                mEmailErrorTV.setText("");
-                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
-
-                                // Create new user
-                                String mLogin = mLoginEditText.getText().toString();
-                                String mEmail = mEmailEditText.getText().toString();
-                                String mPassword = mPasswordEditText.getText().toString();
-
-                                rootNode = FirebaseDatabase.getInstance();
-                                reference = rootNode.getReference("users");
-
-                                UserHelperClass helperClass = new UserHelperClass(mLogin, mEmail, mPassword);
-
-                                reference.child(mLogin).setValue(helperClass);
-
-                                Toast.makeText(SignUpActivity.this, "Utworzono nowe konto!", Toast.LENGTH_SHORT).show();
-                                // Hide progress bar
-                                mProgressBar.setVisibility(View.GONE);
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        /*########### wydupcyć to ###########*/
+//        // Check if given email exists in database
+//        Query checkEmail = reference.orderByChild("email").equalTo(emailInput);
+//
+//        checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    // Check if given login exists
+//                    Query checkLogin = reference.orderByChild("login").equalTo(loginInput);
+//                    checkLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.exists()) {
+//                                // Show error - login taken
+//                                mLoginErrorTV.setText(getResources().getString(R.string.login_occupied));
+//                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
+//                                // Show error - email taken
+//                                mEmailErrorTV.setText(getResources().getString(R.string.email_occupied));
+//                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
+//                                // Hide progress bar
+//                                mProgressBar.setVisibility(View.GONE);
+//                            } else {
+//                                // Clear error panel for login
+//                                mLoginErrorTV.setText("");
+//                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
+//                                // Show error with information that email exists in database
+//                                mEmailErrorTV.setText(getResources().getString(R.string.email_occupied));
+//                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
+//                                // Hide progress bar
+//                                mProgressBar.setVisibility(View.GONE);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//
+//                } else {
+//                    // Check if given login exists
+//                    Query checkLogin = reference.orderByChild("login").equalTo(loginInput);
+//
+//                    checkLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.exists()) {
+//                                // Show error - login taken
+//                                mLoginErrorTV.setText(getResources().getString(R.string.login_occupied));
+//                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border_error, null));
+//                                // Clear error panel for email
+//                                mEmailErrorTV.setText("");
+//                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
+//                                // Hide progress bar
+//                                mProgressBar.setVisibility(View.GONE);
+//                            } else {
+//                                // Clear error panel for login
+//                                mLoginErrorTV.setText("");
+//                                mLoginEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
+//                                // Clear error panel for email
+//                                mEmailErrorTV.setText("");
+//                                mEmailEditText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_border, null));
+//
+//                                // Create new user
+//                                String mLogin = mLoginEditText.getText().toString();
+//                                String mEmail = mEmailEditText.getText().toString();
+//                                String mPassword = mPasswordEditText.getText().toString();
+//
+//                                rootNode = FirebaseDatabase.getInstance();
+//                                reference = rootNode.getReference("users");
+//
+////                                UserHelperClass helperClass = new UserHelperClass(mLogin, mEmail, mPassword);
+////
+////                                reference.child(mLogin).setValue(helperClass);
+//
+//                                Toast.makeText(SignUpActivity.this, "Utworzono nowe konto!", Toast.LENGTH_SHORT).show();
+//                                // Hide progress bar
+//                                mProgressBar.setVisibility(View.GONE);
+//                                finish();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                        }
+//                    });
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
     }
 
     private void connectVariablesToGui() {

@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public final class DatabaseConnection {
     private static final String TAG = "DatabaseConnectionTAG";
     private static final String SHARED_PREF_DB_CREDENTIALS = "dbCredentials";
     private static final String MS_SQL_SERVER_DRIVER = "net.sourceforge.jtds.jdbc.Driver";
