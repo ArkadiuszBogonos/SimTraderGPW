@@ -11,21 +11,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simtradergpw.R;
 import com.example.simtradergpw.activity.LoginActivity;
 
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class WalletFragment extends Fragment {
+    RecyclerView ownedStocksRecyclerView;
     private TextView uLoginTv, uWalletValueTv, uMoneyTv, uStocksValueTv, uLoanTv;
     private Double userBalance, userLoan, userOwnedStockVal, userWalletValue;
     private String userLogin;
     private Integer userId;
+
+    ArrayList<StockRecord> uOwnedStocksList = new ArrayList<>();
 
 
     @Nullable
@@ -39,6 +46,7 @@ public class WalletFragment extends Fragment {
 
         connectVariablesToGui(view);
         getDataFromDb();
+        showOwnedStocks();
 
         return view;
     }
@@ -47,27 +55,64 @@ public class WalletFragment extends Fragment {
     private void getDataFromDb() {
         Statement statement = null;
         userWalletValue = 0.0;
+        userOwnedStockVal = 0.0;
 
         try {
             statement = LoginActivity.connection.createStatement();
 
             // Check how many stocks of this company user owns
-            String sqlUserData = "SELECT us_balance, us_loan FROM us__users WHERE us_id = "+userId;
-            ResultSet resultUserData = statement.executeQuery(sqlUserData);
-            if (resultUserData.next()) {
-                userBalance = resultUserData.getDouble(("us_balance"));
-                userLoan = resultUserData.getDouble(("us_loan"));
+            String sqlUserData = "SELECT us_balance, us_loan FROM us__users WHERE us_id = " + userId;
+            ResultSet resultSet = statement.executeQuery(sqlUserData);
+            if (resultSet.next()) {
+                userBalance = resultSet.getDouble(("us_balance"));
+                userLoan = resultSet.getDouble(("us_loan"));
             }
 
-//            String sqlOwnedStocksVal = "SELECT us_balance, us_loan FROM us_wallet WHERE us_id = "+userId;
-//            ResultSet resultOwnedStocksVal = statement.executeQuery(sqlOwnedStocksVal);
-//            if (resultOwnedStocksVal.next()) {
-//                userBalance = resultOwnedStocksVal.getDouble(("us_balance"));
-//            }
 
-            uMoneyTv.setText(userBalance.toString());
-            uLoanTv.setText(userLoan.toString());
+            String sqlOwnedStocks = "SELECT uw_quantity, cp_ticker FROM us_wallet INNER JOIN cp__company ON uw_cpid = cp_id WHERE uw_usid = " + userId
+                    + " AND uw_quantity > 0";
+            resultSet = statement.executeQuery(sqlOwnedStocks);
 
+            while (resultSet.next()) {
+                for (Integer i = 0; i < Wig20Fragment.mWig20records.size(); i++) {
+                    // Data from database
+                    String tickerFromDb = resultSet.getString(("cp_ticker"));
+                    Integer ownedQuantity = resultSet.getInt(("uw_quantity"));
+
+                    StockRecord record = Wig20Fragment.mWig20records.get(i);
+
+
+
+                    if (tickerFromDb.equals(record.getTicker())) {
+                        String name = record.getName();
+                        String ticker = record.getTicker();
+
+                        String currentPriceBufor = record.getLast().replace(",", ".");
+                        Double currentPrice = 0.0;
+
+                        try {
+                            currentPrice =  Double.parseDouble(currentPriceBufor);
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+
+                        userOwnedStockVal += ownedQuantity * currentPrice;
+
+
+                        StockRecord ownedStockRecord = new StockRecord(name, ticker, currentPriceBufor, null, ownedQuantity);
+                        uOwnedStocksList.add(ownedStockRecord);
+                    }
+                }
+            }
+
+            // Total wallet value
+            userWalletValue = userBalance + userOwnedStockVal - userLoan;
+
+            uMoneyTv.setText(doubleToTwoDecimal(userBalance));
+            uLoanTv.setText(doubleToTwoDecimal(userLoan));
+            uStocksValueTv.setText(doubleToTwoDecimal(userOwnedStockVal));
+            uWalletValueTv.setText(doubleToTwoDecimal(userWalletValue));
 
 
         } catch (SQLException throwables) {
@@ -76,11 +121,51 @@ public class WalletFragment extends Fragment {
         }
     }
 
+//    private void populateArrayList() {
+//        Statement statement = null;
+//        try {
+//            statement = LoginActivity.connection.createStatement();
+//
+//            String sqlOwnedStocks = "SELECT uw_quantity, cp_name, cp_ticker FROM us_wallet INNER JOIN cp__company ON uw_cpid = cp_id WHERE uw_usid = " + userId
+//                    + " AND uw_quantity > 0";
+//            ResultSet resultSet = statement.executeQuery(sqlOwnedStocks);
+//
+//            while (resultSet.next()) {
+//                String name = resultSet.getString("cp_name");
+//                String ticker = resultSet.getString("cp_ticker");
+//                Integer ownedQuantity = resultSet.getInt("uw_quantity");
+//
+//                StockRecord record = new StockRecord(name, ticker, null, null, ownedQuantity);
+//
+//                uOwnedStocksList.add(record);
+//            }
+//
+//        } catch (SQLException throwables) {
+//            Toast.makeText(getContext(), throwables.getMessage(), Toast.LENGTH_SHORT).show();
+//            throwables.printStackTrace();
+//        }
+//    }
+
+    private void showOwnedStocks() {
+//        populateArrayList();
+        if (uOwnedStocksList.size() > 0) {
+            OwnedStocksViewAdapter myAdapter = new OwnedStocksViewAdapter(getContext(), uOwnedStocksList);
+            ownedStocksRecyclerView.setAdapter(myAdapter);
+            ownedStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+    }
+
+    /* ######### Other functions ######### */
+    private String doubleToTwoDecimal(Double number) {
+        // Format Double to two decimal places
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.DOWN);
+        return df.format(number);
+    }
 
     // Hook on GUI elements
     private void connectVariablesToGui(View view) {
-        uLoginTv = view.findViewById(R.id.fr_wallet_login_tv);
-        uLoginTv.setText(userLogin.toUpperCase());
+        ownedStocksRecyclerView = view.findViewById(R.id.fr_wallet_owned_stocks_recyclerview);
 
         uWalletValueTv = view.findViewById(R.id.fr_wallet_wallet_value_tv);
         uMoneyTv = view.findViewById(R.id.fr_wallet_money_tv);

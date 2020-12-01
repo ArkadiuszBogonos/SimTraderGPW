@@ -246,7 +246,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/act_cdetails_converter_tv"
+            android:id="@+id/act_cdetails_label_price_converter_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -256,7 +256,6 @@
             android:id="@+id/act_cdetails_price_converter_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16 x 143,60 = 2276,60
-    " />
+            android:text="0" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

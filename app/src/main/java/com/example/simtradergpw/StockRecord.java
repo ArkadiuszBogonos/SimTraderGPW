@@ -1,11 +1,11 @@
 package com.example.simtradergpw;
 
 public class StockRecord {
-    String name;
-    String ticker;
-    String last;
-    String percentageChange;
-    String turnover;
+    private String name;
+    private String ticker;
+    private String last;
+    private String percentageChange;
+    private Integer ownedQuantity;
 
 
 
@@ -14,15 +14,15 @@ public class StockRecord {
         this.ticker = ticker;
         this.last = last;
         this.percentageChange = percentageChange;
-        this.turnover = "0";
+        this.ownedQuantity = null;
     }
 
-    public StockRecord(String name, String ticker, String last, String percentageChange, String turnover) {
+    public StockRecord(String name, String ticker, String last, String percentageChange, Integer ownedQuantity) {
         this.name = name;
         this.ticker = ticker;
         this.last = last;
         this.percentageChange = percentageChange;
-        this.turnover = turnover;
+        this.ownedQuantity = ownedQuantity;
     }
 
 
@@ -43,7 +43,7 @@ public class StockRecord {
         return percentageChange;
     }
 
-    public String getTurnover() { return turnover; }
+    public Integer getOwnedQuantity() { return ownedQuantity; }
 
     public void setName(String name) {
         this.name = name;
@@ -60,5 +60,5 @@ public class StockRecord {
     public void setPercentageChange(String percentageChange) {
         this.percentageChange = percentageChange;
     }
-    public void setTurnover(String turnover) { this.turnover = turnover; }
+    public void setOwnedQuantity(Integer ownedQuantity) { this.ownedQuantity = ownedQuantity; }
 }

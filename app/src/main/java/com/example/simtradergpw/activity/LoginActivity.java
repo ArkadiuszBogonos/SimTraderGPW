@@ -171,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } catch (SQLException throwables) {
             mProgressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "SQLException!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();
             throwables.printStackTrace();
         }
     }

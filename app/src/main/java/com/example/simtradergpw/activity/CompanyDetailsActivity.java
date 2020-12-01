@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.simtradergpw.DatabaseCommunication;
 import com.example.simtradergpw.R;
 
 import java.math.RoundingMode;
@@ -18,11 +19,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 public class CompanyDetailsActivity extends AppCompatActivity {
     private TextView cNameTv, cTickerTv, cLastTv, cPChangeTv;
-    private TextView ownedNumTv, estimatedNumTv;
+    private TextView ownedNumTv, estimatedNumTv, priceConverterTv;
     private EditText quantityEt;
     private View changeSymbolView;
     private String cName, cTicker, cPChange;
@@ -137,6 +137,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             changeSymbolView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_arrow_drop_down_red_24, null));
             cPChangeTv.setTextColor(ContextCompat.getColor(this, R.color.colorTrendingDown));
         }
+
+        priceConverterTv.setText("0 x " + Double.toString(cLast) + " = 0");
     }
 
     /* ######### Set data in layout from database ######### */
@@ -181,6 +183,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         ownedNumTv = findViewById(R.id.act_cdetails_owned_num_tv);
         estimatedNumTv = findViewById(R.id.act_cdetails_estimated_num_tv);
+
+        priceConverterTv = findViewById(R.id.act_cdetails_price_converter_tv);
 
         quantityEt = findViewById(R.id.act_cdetails_quantity_et);
     }

@@ -1,7 +1,9 @@
-package com.example.simtradergpw.activity;
+package com.example.simtradergpw;
 
 import android.content.Context;
 import android.widget.Toast;
+
+import com.example.simtradergpw.activity.LoginActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

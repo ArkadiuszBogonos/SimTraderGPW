@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SimTraderGPW</string>
-    <string name="image_with_brands_logo">Obraz z logo aplikacji</string>
+
+    <!--Login / Sign up-->
     <string name="btn_login">Zaloguj</string>
     <string name="login">Login</string>
     <string name="email">Adres e-mail</string>
@@ -9,6 +10,19 @@
     <string name="singup">Nie masz konta? Utwórz je tutaj!</string>
     <string name="cancel">Anuluj</string>
     <string name="signup_btn">Utwórz konto!</string>
+
+    <!--Wallet-->
+    <string name="wallet_details">Szczegóły portfela</string>
+    <string name="wallet">Portfel</string>
+    <string name="owned_stocks">Posiadane papiery</string>
+    <string name="wallet_value">Wartość porfela:</string>
+    <string name="money">Środki pieniężne:</string>
+    <string name="owned_stocks_value">Wartość papierów:</string>
+    <string name="loans">Kredyty:</string>
+    
+    <!--Transactions history-->
+    <string name="transactions">Transakcje</string>
+    <string name="transactions_history">Historia transakcji</string>
 
     <!--Validation messages-->
     <string name="incorrect_email_structure">Niepoprawny adres e-mail.</string>
@@ -22,11 +36,18 @@
     <string name="login_occupied">Ta nazwa użytkownika jest już zajęta.</string>
 
     <!--WIG 20-->
+    <string name="stack_quotes">Notowania</string>
     <string name="name">Nazwa</string>
     <string name="ticker">Ticker</string>
     <string name="last">Kurs</string>
     <string name="percentage_change">Zmiana w %</string>
+    <string name="quantity">Ilość</string>
+    <string name="estimated_value">Szacowana wartość</string>
+
+    <!--Currencies-->
+    <string name="pln_sufix">PLN</string>
 
     <!--Images desciptions-->
     <string name="img_change_desc">Symbol zmiany procentowej (Może być dodatni, ujemny lub neutralny)</string>
+    <string name="image_with_brands_logo">Obraz z logo aplikacji</string>
 </resources>

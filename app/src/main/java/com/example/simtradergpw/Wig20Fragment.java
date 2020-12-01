@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Wig20Fragment extends Fragment {
 
     RecyclerView wig20RecyclerView;
-    ArrayList<StockRecord> mWig20records = null;
+    static ArrayList<StockRecord> mWig20records = null;
 
 
     Runnable mWig20Updater = new Runnable() {
@@ -41,7 +41,7 @@ public class Wig20Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wig20list, container, false);
 
-        wig20RecyclerView = view.findViewById(R.id.wig20_recyclerview);
+        wig20RecyclerView = view.findViewById(R.id.fr_wig20_recyclerview);
 
         Thread t = new Thread(mWig20Updater);
         t.start();
@@ -51,7 +51,7 @@ public class Wig20Fragment extends Fragment {
         return view;
     }
 
-    void showWig20() {
+    private void showWig20() {
         Wig20RecyclerViewAdapter myAdapter = new Wig20RecyclerViewAdapter(getContext(), mWig20records);
         wig20RecyclerView.setAdapter(myAdapter);
         wig20RecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

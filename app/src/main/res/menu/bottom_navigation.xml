@@ -3,16 +3,21 @@
     <item
         android:id="@+id/nav_wigList"
         android:icon="@drawable/ic_baseline_trending_up_24"
-        android:title="Notowania" />
+        android:title="@string/stack_quotes" />
 
     <item
         android:id="@+id/nav_wallet"
         android:icon="@drawable/ic_baseline_money_24"
-        android:title="Portfel" />
+        android:title="@string/wallet" />
 
     <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="Profil" />
+        android:id="@+id/nav_transactions"
+        android:icon="@drawable/ic_baseline_transactions_24"
+        android:title="@string/transactions" />
+
+    <item
+        android:id="@+id/nav_ranking"
+        android:icon="@drawable/ic_baseline_format_list_numbered_24"
+        android:title="Ranking" />
 
 </menu>
