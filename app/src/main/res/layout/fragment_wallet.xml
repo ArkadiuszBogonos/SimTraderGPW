@@ -31,7 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingUp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_label_wallet_value_tv"
@@ -65,19 +64,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingUp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_label_money_tv"
         app:layout_constraintStart_toEndOf="@+id/fr_wallet_label_money_tv"
-        app:layout_constraintTop_toTopOf="@+id/fr_wallet_label_money_tv" />
+        app:layout_constraintTop_toTopOf="@+id/fr_wallet_label_money_tv"
+        tools:text="0" />
 
     <TextView
         android:id="@+id/fr_wallet_stocks_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingUp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_label_stocks_value_tv"
@@ -99,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wallet_details"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorText"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_title_background"
@@ -124,47 +122,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/wallet"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fr_wallet_title_background" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="344"
-        android:textSize="18sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_wallet_tv"
-        app:layout_constraintStart_toEndOf="@+id/fr_wallet_wallet_tv"
-        app:layout_constraintTop_toTopOf="@+id/fr_wallet_wallet_tv" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textColor="@color/colorTrendingUp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="16dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="2dp"
-        android:background="@drawable/ic_baseline_arrow_drop_up_green_24"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView13"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/fr_wallet_currency_sufix_tv1"
@@ -218,12 +181,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingDown"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fr_wallet_label_loan_tv"
         app:layout_constraintStart_toEndOf="@+id/fr_wallet_label_loan_tv"
-        app:layout_constraintTop_toTopOf="@+id/fr_wallet_label_loan_tv" />
+        app:layout_constraintTop_toTopOf="@+id/fr_wallet_label_loan_tv"
+        tools:text="0" />
 
     <TextView
         android:id="@+id/fr_wallet_currency_sufix_tv4"
@@ -240,16 +203,17 @@
         android:id="@+id/divider7"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/fr_wallet_wallet_tv"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fr_wallet_wallet_tv" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/colorDelicateGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -362,5 +326,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fr_wallet_title_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

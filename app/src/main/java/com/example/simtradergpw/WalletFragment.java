@@ -121,35 +121,10 @@ public class WalletFragment extends Fragment {
         }
     }
 
-//    private void populateArrayList() {
-//        Statement statement = null;
-//        try {
-//            statement = LoginActivity.connection.createStatement();
-//
-//            String sqlOwnedStocks = "SELECT uw_quantity, cp_name, cp_ticker FROM us_wallet INNER JOIN cp__company ON uw_cpid = cp_id WHERE uw_usid = " + userId
-//                    + " AND uw_quantity > 0";
-//            ResultSet resultSet = statement.executeQuery(sqlOwnedStocks);
-//
-//            while (resultSet.next()) {
-//                String name = resultSet.getString("cp_name");
-//                String ticker = resultSet.getString("cp_ticker");
-//                Integer ownedQuantity = resultSet.getInt("uw_quantity");
-//
-//                StockRecord record = new StockRecord(name, ticker, null, null, ownedQuantity);
-//
-//                uOwnedStocksList.add(record);
-//            }
-//
-//        } catch (SQLException throwables) {
-//            Toast.makeText(getContext(), throwables.getMessage(), Toast.LENGTH_SHORT).show();
-//            throwables.printStackTrace();
-//        }
-//    }
 
     private void showOwnedStocks() {
-//        populateArrayList();
         if (uOwnedStocksList.size() > 0) {
-            OwnedStocksViewAdapter myAdapter = new OwnedStocksViewAdapter(getContext(), uOwnedStocksList);
+            WalletOwnedStocksRecyclerViewAdapter myAdapter = new WalletOwnedStocksRecyclerViewAdapter(getContext(), uOwnedStocksList);
             ownedStocksRecyclerView.setAdapter(myAdapter);
             ownedStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }

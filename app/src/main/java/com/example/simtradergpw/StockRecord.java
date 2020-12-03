@@ -1,12 +1,15 @@
 package com.example.simtradergpw;
 
+import java.util.ArrayList;
+
 public class StockRecord {
     private String name;
     private String ticker;
     private String last;
     private String percentageChange;
     private Integer ownedQuantity;
-
+    private String timeStamp;
+    private Boolean isBuy;
 
 
     public StockRecord(String name, String ticker, String last, String percentageChange) {
@@ -15,6 +18,8 @@ public class StockRecord {
         this.last = last;
         this.percentageChange = percentageChange;
         this.ownedQuantity = null;
+        this.timeStamp = null;
+        this.isBuy = null;
     }
 
     public StockRecord(String name, String ticker, String last, String percentageChange, Integer ownedQuantity) {
@@ -23,6 +28,18 @@ public class StockRecord {
         this.last = last;
         this.percentageChange = percentageChange;
         this.ownedQuantity = ownedQuantity;
+        this.timeStamp = null;
+        this.isBuy = null;
+    }
+
+    public StockRecord(String name, String ticker, String last, String percentageChange, Integer ownedQuantity, String timeStamp, Boolean isBuy) {
+        this.name = name;
+        this.ticker = ticker;
+        this.last = last;
+        this.percentageChange = percentageChange;
+        this.ownedQuantity = ownedQuantity;
+        this.timeStamp = timeStamp;
+        this.isBuy = isBuy;
     }
 
 
@@ -45,6 +62,14 @@ public class StockRecord {
 
     public Integer getOwnedQuantity() { return ownedQuantity; }
 
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public Boolean getIsBuy() {
+        return isBuy;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -61,4 +86,12 @@ public class StockRecord {
         this.percentageChange = percentageChange;
     }
     public void setOwnedQuantity(Integer ownedQuantity) { this.ownedQuantity = ownedQuantity; }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setIsBuy(Boolean isBuy) {
+        this.isBuy = isBuy;
+    }
 }

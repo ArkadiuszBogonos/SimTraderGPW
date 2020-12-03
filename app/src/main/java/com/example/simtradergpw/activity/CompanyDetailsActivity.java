@@ -11,14 +11,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.simtradergpw.ChartData;
 import com.example.simtradergpw.DatabaseCommunication;
 import com.example.simtradergpw.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class CompanyDetailsActivity extends AppCompatActivity {
     private TextView cNameTv, cTickerTv, cLastTv, cPChangeTv;
@@ -28,6 +38,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private String cName, cTicker, cPChange;
     private Double cLast, pChangeValue;
     private Integer userId, companyId, ownedQuantity;
+    private LineChart mChart;
+
+    ArrayList<ChartData> stockPriceHistoryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +71,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         setData();
         getFromDb();
+        drawChart();
     }
 
     /* ######### Database communication ######### */
@@ -141,28 +155,72 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         priceConverterTv.setText("0 x " + Double.toString(cLast) + " = 0");
     }
 
-    /* ######### Set data in layout from database ######### */
+    /* ######### Get data from database and set it on layout ######### */
     private void getFromDb() {
         Statement statement = null;
+        ResultSet resultSet;
+        String sql;
+
         try {
             statement = LoginActivity.connection.createStatement();
 
             // Check how many stocks of this company user owns
-            String sqlOwnedQuantity = "SELECT SUM(uw_quantity) as quantity FROM us_wallet WHERE uw_usid = "+userId+" AND uw_cpid = "+companyId;
-            ResultSet resultOwnedQuantity = statement.executeQuery(sqlOwnedQuantity);
-            if (resultOwnedQuantity.next()) {
-                ownedQuantity = resultOwnedQuantity.getInt("quantity");
+            sql = "SELECT SUM(uw_quantity) as quantity FROM us_wallet WHERE uw_usid = "+userId+" AND uw_cpid = "+companyId;
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                ownedQuantity = resultSet.getInt("quantity");
             }
 
             ownedNumTv.setText(ownedQuantity.toString());
             estimatedNumTv.setText(doubleToTwoDecimal(ownedQuantity * cLast));
+
+            // Get company historic values from last 30 days
+            sql = "SELECT * FROM cp_history WHERE ch_ticker = '"+ cTicker +"' AND ch_timestamp > " +
+                    "dateadd(day, -30, getdate())  ORDER BY ch_timestamp ASC";
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Double price = resultSet.getDouble("ch_price");
+                String timeStamp = resultSet.getString("ch_timestamp");
+
+                ChartData record = new ChartData(price, timeStamp);
+                stockPriceHistoryList.add(record);
+            }
 
         } catch (SQLException throwables) {
             Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();
             throwables.printStackTrace();
         }
 
+    }
 
+    /* ######### Draw chart ######### */
+    private void drawChart(){
+        mChart.setDragEnabled(false);
+        mChart.setScaleEnabled(false);
+
+        // Add data
+        ArrayList<Entry> chartValues = new ArrayList<>();
+
+        for (int i = 0; i < stockPriceHistoryList.size(); i++) {
+            chartValues.add(new Entry(i, stockPriceHistoryList.get(i).getPrice().floatValue()));
+        }
+
+        LineDataSet set1 = new LineDataSet(chartValues, "Wartość akcji");
+
+        set1.setFillAlpha(110);
+        set1.setCircleColor(ContextCompat.getColor(this, R.color.colorAccent));
+        set1.setColor(ContextCompat.getColor(this, R.color.colorBlue));
+        set1.setDrawValues(false);
+        set1.setDrawCircles(false);
+
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        LineData data = new LineData(dataSets);
+
+        mChart.setData(data);
     }
 
     /* ######### Other functions ######### */
@@ -183,9 +241,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         ownedNumTv = findViewById(R.id.act_cdetails_owned_num_tv);
         estimatedNumTv = findViewById(R.id.act_cdetails_estimated_num_tv);
-
         priceConverterTv = findViewById(R.id.act_cdetails_price_converter_tv);
-
         quantityEt = findViewById(R.id.act_cdetails_quantity_et);
+
+        mChart = findViewById(R.id.act_cdetails_linearchart);
     }
 }

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.simtradergpw.RankingFragment;
+import com.example.simtradergpw.ProfileFragment;
 import com.example.simtradergpw.R;
 import com.example.simtradergpw.TransactionsFragment;
 import com.example.simtradergpw.WalletFragment;
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                  case R.id.nav_transactions:
                     selectedFragment = new TransactionsFragment();
                     break;
-                case R.id.nav_ranking:
-                    selectedFragment = new RankingFragment();
+                case R.id.nav_profile:
+                    selectedFragment = new ProfileFragment();
                     break;
             }
             // Change displayed fragment

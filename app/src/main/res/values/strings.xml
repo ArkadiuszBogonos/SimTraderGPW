@@ -24,6 +24,16 @@
     <string name="transactions">Transakcje</string>
     <string name="transactions_history">Historia transakcji</string>
 
+    <!--Profile-->
+    <string name="profile">Profil</string>
+    <string name="money_graph">Wykres środków pieniężnych</string>
+    <string name="stock_value_graph">Wykres wartości posiadanych akcji</string>
+    <string name="show_more">Pokaż więcej</string>
+    <string name="stats">Statystyki</string>
+    <string name="ranking">Ranking</string>
+    <string name="take_loan">Zaciągnij kredyt</string>
+    <string name="pay_loan">Spłać kredyt</string>
+
     <!--Validation messages-->
     <string name="incorrect_email_structure">Niepoprawny adres e-mail.</string>
     <string name="password_too_short">Hasło musi zawierać conajmniej 5 znaków.</string>

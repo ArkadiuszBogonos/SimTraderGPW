@@ -16,8 +16,8 @@
         android:title="@string/transactions" />
 
     <item
-        android:id="@+id/nav_ranking"
-        android:icon="@drawable/ic_baseline_format_list_numbered_24"
-        android:title="Ranking" />
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_person_24dp"
+        android:title="Profil" />
 
 </menu>

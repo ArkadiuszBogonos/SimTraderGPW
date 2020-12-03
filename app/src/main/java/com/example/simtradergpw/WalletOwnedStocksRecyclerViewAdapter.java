@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,27 +14,27 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class OwnedStocksViewAdapter extends RecyclerView.Adapter<OwnedStocksViewAdapter.MyViewHolder> {
+public class WalletOwnedStocksRecyclerViewAdapter extends RecyclerView.Adapter<WalletOwnedStocksRecyclerViewAdapter.MyViewHolder> {
     private static final String TAG = "OwnedStocksViewAdapter";
 
     ArrayList<StockRecord> wig20ArrayList;
     Context context;
 
-    public OwnedStocksViewAdapter(Context ct, ArrayList<StockRecord> mArrayList) {
+    public WalletOwnedStocksRecyclerViewAdapter(Context ct, ArrayList<StockRecord> mArrayList) {
         context = ct;
         wig20ArrayList = mArrayList;
     }
 
     @NonNull
     @Override
-    public OwnedStocksViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public WalletOwnedStocksRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.adapter_view_owned_stocks, parent, false);
-        return new OwnedStocksViewAdapter.MyViewHolder(view);
+        return new WalletOwnedStocksRecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OwnedStocksViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WalletOwnedStocksRecyclerViewAdapter.MyViewHolder holder, int position) {
         StockRecord mStockRecord = wig20ArrayList.get(position);
         final String sName = mStockRecord.getName();
         final String sTicker = mStockRecord.getTicker();

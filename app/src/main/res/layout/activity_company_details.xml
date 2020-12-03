@@ -74,7 +74,7 @@
         android:id="@+id/act_cdetails_change_symbol_view"
         android:layout_width="24dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/ic_baseline_arrow_drop_up_green_24"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_pchange_tv"
         app:layout_constraintEnd_toEndOf="parent"
@@ -173,16 +173,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_owned_tv"
-        app:srcCompat="@drawable/wykres_placeholder" />
-
     <TextView
         android:id="@+id/act_cdetails_estimated_num_tv"
         android:layout_width="wrap_content"
@@ -212,6 +202,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/act_cdetails_owned_tv" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/act_cdetails_linearchart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider4">
+
+    </com.github.mikephil.charting.charts.LineChart>
 
     <View
         android:id="@+id/divider2"

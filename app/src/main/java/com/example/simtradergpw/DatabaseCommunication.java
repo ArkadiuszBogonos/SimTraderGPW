@@ -1,6 +1,7 @@
 package com.example.simtradergpw;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.simtradergpw.activity.LoginActivity;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 public final class DatabaseCommunication {
+    private static final String TAG = "DatabaseCommunication";
     static Statement statement = null;
     public static final Double COMISSION_PERCENT = 0.003;
     public static final Double MIN_COMISSION = 3.0;
@@ -21,6 +23,7 @@ public final class DatabaseCommunication {
     }
 
     public static void buyStock(Context context, int userId, int companyId, int quantity, double pricePerStock) {
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
         final int ACTION_TYPE = 1; // Type of action: 1 means its buy, 0 means its sell
 
         try {
@@ -31,6 +34,12 @@ public final class DatabaseCommunication {
             // Reduce user balance
             String sqlUpdateBalance = "UPDATE us__users SET us_balance = us_balance - "+ total +" WHERE us_id=" + userId;
             Integer updatedRows = statement.executeUpdate(sqlUpdateBalance);
+
+            // Save in user balance history
+            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
+                    "VALUES (" + userId+ ", (SELECT us_balance FROM us__users WHERE us_id = "+userId+"), '" + timeStamp + "')";
+            Integer insertedRows = statement.executeUpdate(sqlInsertBalanceHistory);
+
 
             // Check wheter user already have that company stock in wallet
             String sqlIsInWallet = "SELECT uw_id FROM us_wallet WHERE uw_usid = " + userId + " AND uw_cpid= " + companyId;
@@ -46,7 +55,7 @@ public final class DatabaseCommunication {
             // Insert new record
             else {
                 String sqlInsertIntoWallet = "INSERT INTO us_wallet VALUES (" + userId + ", " + companyId + ", " + quantity + " )";
-                Integer insertedRows = statement.executeUpdate(sqlInsertIntoWallet);
+                insertedRows = statement.executeUpdate(sqlInsertIntoWallet);
             }
 
             saveInTransactionHistory(context, userId, companyId, ACTION_TYPE, quantity, pricePerStock);
@@ -57,6 +66,7 @@ public final class DatabaseCommunication {
     }
 
     public static void sellStock(Context context, int userId, int companyId, int quantity, double pricePerStock) {
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
         final int ACTION_TYPE = 0; // Type of action: 1 means its buy, 0 means its sell
 
         // Calculate comission
@@ -77,6 +87,11 @@ public final class DatabaseCommunication {
             // Update user balance
             String sqlUpdateBalance = "UPDATE us__users SET us_balance = us_balance + "+ total +" WHERE us_id=" + userId;
             updatedRows = statement.executeUpdate(sqlUpdateBalance);
+
+            // Save in user balance history
+            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
+                    "VALUES (" + userId+ ", (SELECT us_balance FROM us__users WHERE us_id = "+userId+"), '" + timeStamp + "')";
+            Integer insertedRows = statement.executeUpdate(sqlInsertBalanceHistory);
 
             saveInTransactionHistory(context, userId, companyId, ACTION_TYPE, quantity, pricePerStock);
 
@@ -99,7 +114,7 @@ public final class DatabaseCommunication {
     }
 
     private static void saveInTransactionHistory(Context context, int userId, int companyId, int actionType, int quantity, double pricePerStock) {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
 
         try {
             statement = LoginActivity.connection.createStatement();
