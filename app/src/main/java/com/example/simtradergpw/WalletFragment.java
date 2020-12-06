@@ -58,7 +58,7 @@ public class WalletFragment extends Fragment {
         userOwnedStockVal = 0.0;
 
         try {
-            statement = LoginActivity.connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
 
             // Check how many stocks of this company user owns
             String sqlUserData = "SELECT us_balance, us_loan FROM us__users WHERE us_id = " + userId;

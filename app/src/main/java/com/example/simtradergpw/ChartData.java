@@ -1,5 +1,7 @@
 package com.example.simtradergpw;
 
+import com.github.mikephil.charting.interfaces.datasets.IDataSet;
+
 public class ChartData {
     private Double price;
     private String date;

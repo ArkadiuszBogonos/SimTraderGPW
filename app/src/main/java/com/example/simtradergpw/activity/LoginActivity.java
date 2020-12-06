@@ -26,7 +26,6 @@ import java.sql.Statement;
 public class LoginActivity extends AppCompatActivity {
     // Declare variables
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static Connection connection = null;
 
     private EditText mLoginEditText, mPasswordEditText;
     private TextView mLoginErrorTV, mPasswordErrorTV;
@@ -43,18 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         connectVariablesToGui();
-
-        // Check if connection is ok
-        if (DatabaseConnection.getConnection() == null) {
-            DatabaseConnection.setConnection();
-        }
-
-        if (DatabaseConnection.getConnection() != null) {
-            connection = DatabaseConnection.getConnection();
-        } else {
-            Toast.makeText(this, "Bład połączenia z bazą.", Toast.LENGTH_SHORT).show();
-        }
-
+        setConnection();
     }
 
     /* ######### CONTROLS ######### */
@@ -120,19 +108,11 @@ public class LoginActivity extends AppCompatActivity {
         final String userEnteredPassword = mPasswordEditText.getText().toString().trim();
 
         // Check if connection is ok
-        if (DatabaseConnection.getConnection() == null) {
-            DatabaseConnection.setConnection();
-        }
-
-        if (DatabaseConnection.getConnection() != null) {
-            connection = DatabaseConnection.getConnection();
-        } else {
-            Toast.makeText(this, "Bład połączenia z bazą.", Toast.LENGTH_SHORT).show();
-        }
+        setConnection();
 
         Statement statement = null;
         try {
-            statement = connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
 
             String sqlIsUser = "SELECT * FROM us__users WHERE us_login='" + userEnteredLogin + "' AND us_password='" + userEnteredPassword+"'";
             ResultSet resultIsUser = statement.executeQuery(sqlIsUser);
@@ -172,6 +152,17 @@ public class LoginActivity extends AppCompatActivity {
         } catch (SQLException throwables) {
             mProgressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();
+            throwables.printStackTrace();
+        }
+    }
+
+    private void setConnection() {
+        try {
+            if (DatabaseConnection.getConnection() == null || DatabaseConnection.getConnection().isClosed()) {
+                DatabaseConnection.setConnection();
+            }
+        } catch (SQLException throwables) {
+            Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_LONG).show();
             throwables.printStackTrace();
         }
     }

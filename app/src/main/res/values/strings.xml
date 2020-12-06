@@ -26,7 +26,7 @@
 
     <!--Profile-->
     <string name="profile">Profil</string>
-    <string name="money_graph">Wykres środków pieniężnych</string>
+    <string name="wallet_value_graph">Wykres wartości portfela</string>
     <string name="stock_value_graph">Wykres wartości posiadanych akcji</string>
     <string name="show_more">Pokaż więcej</string>
     <string name="stats">Statystyki</string>

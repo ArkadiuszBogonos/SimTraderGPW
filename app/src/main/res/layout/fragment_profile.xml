@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/fr_profile_title_background"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@color/colorDelicateGray"
@@ -15,146 +15,89 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/fr_profile_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile"
         android:textColor="@color/colorText"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="@+id/fr_profile_title_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/fr_profile_top_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fr_profile_title_tv" />
+
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/fr_profile_wallet_val_graph_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Wykres wartości portfela"
+        android:text="@string/wallet_value_graph"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/fr_profile_title_tv" />
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+        android:id="@+id/fr_profile_wallet_value_linechart"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Kredyty"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider10" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Suma wartości niespłaconych kredytów:"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Suma należnych odsetek:"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/btn_default"
-        android:text="@string/take_loan"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_default"
-        android:text="@string/pay_loan"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/fr_profile_divider_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fr_profile_wallet_val_graph_tv" >
 
-    <TextView
-        android:id="@+id/textView11"
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fr_profile_guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="0"
-        android:textColor="@color/colorTrendingDown"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9"
-        tools:text="0" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/pln_sufix"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="0"
-        android:textColor="@color/colorTrendingDown"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
-        tools:text="0" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/pln_sufix"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+    <View
+        android:id="@+id/fr_profile_divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/fr_profile_guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/fr_profile_loans_btn"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_default"
+        android:drawableStart="@drawable/ic_baseline_account_balance_white_24"
+        android:drawablePadding="6dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="@string/loans"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/fr_profile_divier_3"
+        app:layout_constraintEnd_toStartOf="@+id/fr_profile_stats_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/fr_profile_stats_btn"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_default"
@@ -164,25 +107,14 @@
         android:paddingEnd="6dp"
         android:text="@string/stats"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/fr_profile_loans_btn"
+        app:layout_constraintEnd_toStartOf="@+id/fr_profile_rank_btn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button4" />
-
-    <View
-        android:id="@+id/divider10"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintStart_toEndOf="@+id/fr_profile_loans_btn"
+        app:layout_constraintTop_toTopOf="@+id/fr_profile_loans_btn" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/fr_profile_rank_btn"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_default"
@@ -192,35 +124,31 @@
         android:paddingEnd="6dp"
         android:text="@string/ranking"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="@+id/button5"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/fr_profile_stats_btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toTopOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btn_default"
-        android:drawableStart="@drawable/ic_baseline_account_balance_white_24"
-        android:drawablePadding="6dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        android:text="Kredyty"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lineChart" />
+        app:layout_constraintStart_toEndOf="@+id/fr_profile_stats_btn"
+        app:layout_constraintTop_toTopOf="@+id/fr_profile_stats_btn" />
 
     <View
-        android:id="@+id/divider13"
+        android:id="@+id/fr_profile_divier_2"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/fr_profile_loans_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/fr_profile_divier_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="4dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

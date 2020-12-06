@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simtradergpw.DatabaseCommunication;
+import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -163,7 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         Statement statement = null;
         try {
-            statement = LoginActivity.connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
 
             /*#### Check if login and email are not taken ####*/
             String sqlIsUser = "SELECT * FROM us__users WHERE us_login='" + loginInput + "' OR us_email='" + emailInput + "'";

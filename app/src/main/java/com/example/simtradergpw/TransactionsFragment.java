@@ -52,7 +52,7 @@ public class TransactionsFragment extends Fragment {
 
 
         try {
-            statement = LoginActivity.connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
 
             String sql = "SELECT cp_name, cp_ticker, ut_quantity, ut_price_per_stock, ut_is_buy, ut_timestamp FROM us_transactions_h " +
                          "INNER JOIN cp__company ON ut_cpid = cp_id WHERE ut_usid = " + userId + " ORDER BY ut_timestamp DESC";

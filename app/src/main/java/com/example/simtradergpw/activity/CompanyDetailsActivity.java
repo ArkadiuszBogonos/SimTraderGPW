@@ -1,6 +1,7 @@
 package com.example.simtradergpw.activity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,24 +14,34 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.example.simtradergpw.ChartData;
 import com.example.simtradergpw.DatabaseCommunication;
+import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.IMarker;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
-public class CompanyDetailsActivity extends AppCompatActivity {
+public class CompanyDetailsActivity extends AppCompatActivity implements OnChartValueSelectedListener {
     private TextView cNameTv, cTickerTv, cLastTv, cPChangeTv;
     private TextView ownedNumTv, estimatedNumTv, priceConverterTv;
     private EditText quantityEt;
@@ -38,7 +49,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private String cName, cTicker, cPChange;
     private Double cLast, pChangeValue;
     private Integer userId, companyId, ownedQuantity;
-    private LineChart mChart;
+    private LineChart mLineChart;
 
     ArrayList<ChartData> stockPriceHistoryList = new ArrayList<>();
 
@@ -57,7 +68,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         // Get company ID
         Statement statement = null;
         try {
-            statement = LoginActivity.connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
             String sqlCompanyId = "SELECT cp_id FROM cp__company WHERE cp_ticker ='" + cTicker + "'";
             ResultSet resultCompanyId = statement.executeQuery(sqlCompanyId);
 
@@ -162,7 +173,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         String sql;
 
         try {
-            statement = LoginActivity.connection.createStatement();
+            statement = DatabaseConnection.getConnection().createStatement();
 
             // Check how many stocks of this company user owns
             sql = "SELECT SUM(uw_quantity) as quantity FROM us_wallet WHERE uw_usid = "+userId+" AND uw_cpid = "+companyId;
@@ -196,8 +207,18 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     /* ######### Draw chart ######### */
     private void drawChart(){
-        mChart.setDragEnabled(false);
-        mChart.setScaleEnabled(false);
+        mLineChart.setOnChartValueSelectedListener(this);
+        mLineChart.setDragEnabled(false);
+        mLineChart.setScaleEnabled(false);
+
+        // Hide labels on right Y axis
+        YAxis rightAxis = mLineChart.getAxisRight();
+        rightAxis.setDrawLabels(false);
+
+        // Display date on X axis
+        XAxis xAxis = mLineChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(getDate()));
+
 
         // Add data
         ArrayList<Entry> chartValues = new ArrayList<>();
@@ -209,10 +230,11 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         LineDataSet set1 = new LineDataSet(chartValues, "Wartość akcji");
 
         set1.setFillAlpha(110);
-        set1.setCircleColor(ContextCompat.getColor(this, R.color.colorAccent));
         set1.setColor(ContextCompat.getColor(this, R.color.colorBlue));
-        set1.setDrawValues(false);
         set1.setDrawCircles(false);
+
+        set1.setHighlightEnabled(true);
+        set1.setDrawHighlightIndicators(true);
 
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -220,15 +242,39 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         LineData data = new LineData(dataSets);
 
-        mChart.setData(data);
+        mLineChart.setData(data);
     }
 
+
     /* ######### Other functions ######### */
+
+    // Convert double value into String with two decimal places precision
     private String doubleToTwoDecimal(Double number) {
         // Format Double to two decimal places
         DecimalFormat df = new DecimalFormat("0.00");
         df.setRoundingMode(RoundingMode.DOWN);
         return df.format(number);
+    }
+
+    // Function that is used to format X axis on the chart
+    private ArrayList<String> getDate() {
+        SimpleDateFormat formatFromDatabase = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM");
+
+
+        ArrayList<String> label = new ArrayList<>();
+        for (int i = 0; i < stockPriceHistoryList.size(); i++) {
+            try {
+                String date = stockPriceHistoryList.get(i).getDate();
+                date = myFormat.format(formatFromDatabase.parse(date));
+
+                label.add(date);
+            } catch (ParseException e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
+        return label;
     }
 
     // Hook on GUI elements
@@ -244,6 +290,19 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         priceConverterTv = findViewById(R.id.act_cdetails_price_converter_tv);
         quantityEt = findViewById(R.id.act_cdetails_quantity_et);
 
-        mChart = findViewById(R.id.act_cdetails_linearchart);
+        mLineChart = findViewById(R.id.act_cdetails_linearchart);
     }
+
+    /* #### Chart interface ####*/
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+//        Toast.makeText(this, Float.toString(e.getY()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, Float.toString(h.getX()), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
+
 }
