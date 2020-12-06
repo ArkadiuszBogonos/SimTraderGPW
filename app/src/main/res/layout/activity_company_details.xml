@@ -255,12 +255,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Przelicznik: " />
+            android:layout_marginEnd="4dp"
+            android:text="@string/converter" />
 
         <TextView
-            android:id="@+id/act_cdetails_price_converter_tv"
+            android:id="@+id/act_cdetails_quantity_price_converter_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0" />
+            android:layout_weight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/act_cdetails_times_symbol_price_converter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:text="@string/times_symbol" />
+
+        <TextView
+            android:id="@+id/act_cdetails_price_price_converter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/act_cdetails_equality_symbol_price_converter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:text="@string/equality_symbol" />
+
+        <TextView
+            android:id="@+id/act_cdetails_result_price_converter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="0" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

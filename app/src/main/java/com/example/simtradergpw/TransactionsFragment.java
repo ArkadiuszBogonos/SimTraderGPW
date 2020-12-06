@@ -65,14 +65,9 @@ public class TransactionsFragment extends Fragment {
                     Integer ownedQuantity = resultSet.getInt("ut_quantity");
                     Boolean isBuy = resultSet.getBoolean("ut_is_buy");
                     String timeStamp = resultSet.getString("ut_timestamp");
-
                     Double last = resultSet.getDouble("ut_price_per_stock");
-                    String price = null;
 
-                    price = Double.toString(last);
-                    price = price.replace(",", ".");
-
-                    StockRecord record = new StockRecord(name, ticker, price, null, ownedQuantity, timeStamp, isBuy);
+                    StockRecord record = new StockRecord(name, ticker, last, null, ownedQuantity, timeStamp, isBuy);
                     uTransactionHistory.add(record);
             }
 

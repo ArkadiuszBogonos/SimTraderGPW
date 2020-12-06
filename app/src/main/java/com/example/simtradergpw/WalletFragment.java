@@ -29,7 +29,6 @@ public class WalletFragment extends Fragment {
     RecyclerView ownedStocksRecyclerView;
     private TextView uLoginTv, uWalletValueTv, uMoneyTv, uStocksValueTv, uLoanTv;
     private Double userBalance, userLoan, userOwnedStockVal, userWalletValue;
-    private String userLogin;
     private Integer userId;
 
     ArrayList<StockRecord> uOwnedStocksList = new ArrayList<>();
@@ -41,7 +40,6 @@ public class WalletFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
         // Get user info from sharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
-        userLogin = sharedPreferences.getString("userLogin", "ERROR");
         userId = sharedPreferences.getInt("userId", 0);
 
         connectVariablesToGui(view);
@@ -86,21 +84,11 @@ public class WalletFragment extends Fragment {
                     if (tickerFromDb.equals(record.getTicker())) {
                         String name = record.getName();
                         String ticker = record.getTicker();
-
-                        String currentPriceBufor = record.getLast().replace(",", ".");
-                        Double currentPrice = 0.0;
-
-                        try {
-                            currentPrice =  Double.parseDouble(currentPriceBufor);
-                        } catch (NumberFormatException e) {
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
+                        Double currentPrice = record.getLast();
 
                         userOwnedStockVal += ownedQuantity * currentPrice;
 
-
-                        StockRecord ownedStockRecord = new StockRecord(name, ticker, currentPriceBufor, null, ownedQuantity);
+                        StockRecord ownedStockRecord = new StockRecord(name, ticker, currentPrice, null, ownedQuantity);
                         uOwnedStocksList.add(ownedStockRecord);
                     }
                 }
@@ -109,10 +97,10 @@ public class WalletFragment extends Fragment {
             // Total wallet value
             userWalletValue = userBalance + userOwnedStockVal - userLoan;
 
-            uMoneyTv.setText(doubleToTwoDecimal(userBalance));
-            uLoanTv.setText(doubleToTwoDecimal(userLoan));
-            uStocksValueTv.setText(doubleToTwoDecimal(userOwnedStockVal));
-            uWalletValueTv.setText(doubleToTwoDecimal(userWalletValue));
+            uMoneyTv.setText(FormatHelper.doubleToTwoDecimal(userBalance));
+            uLoanTv.setText(FormatHelper.doubleToTwoDecimal(userLoan));
+            uStocksValueTv.setText(FormatHelper.doubleToTwoDecimal(userOwnedStockVal));
+            uWalletValueTv.setText(FormatHelper.doubleToTwoDecimal(userWalletValue));
 
 
         } catch (SQLException throwables) {
@@ -130,13 +118,6 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    /* ######### Other functions ######### */
-    private String doubleToTwoDecimal(Double number) {
-        // Format Double to two decimal places
-        DecimalFormat df = new DecimalFormat("0.00");
-        df.setRoundingMode(RoundingMode.DOWN);
-        return df.format(number);
-    }
 
     // Hook on GUI elements
     private void connectVariablesToGui(View view) {

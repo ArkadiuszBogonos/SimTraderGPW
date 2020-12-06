@@ -1,8 +1,10 @@
 package com.example.simtradergpw.activity;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,17 +17,15 @@ import androidx.core.content.res.ResourcesCompat;
 import com.example.simtradergpw.ChartData;
 import com.example.simtradergpw.DatabaseCommunication;
 import com.example.simtradergpw.DatabaseConnection;
+import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -38,16 +38,14 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements OnChartValueSelectedListener {
     private TextView cNameTv, cTickerTv, cLastTv, cPChangeTv;
-    private TextView ownedNumTv, estimatedNumTv, priceConverterTv;
+    private TextView ownedNumTv, estimatedNumTv, priceConverterTv, quantityConverterTv, resultConverterTv;
     private EditText quantityEt;
     private View changeSymbolView;
-    private String cName, cTicker, cPChange;
-    private Double cLast, pChangeValue;
+    private String cName, cTicker;
+    private Double cLast, cPChange;
     private Integer userId, companyId, ownedQuantity;
     private LineChart mLineChart;
 
@@ -59,21 +57,28 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
         setContentView(R.layout.activity_company_details);
         connectVariablesToGui();
 
-        getData();
 
         // Get user ID
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", 0);
 
+        // Get ticker from extras
+        if (getIntent().hasExtra("ticker")) cTicker = getIntent().getStringExtra("ticker");
+
         // Get company ID
         Statement statement = null;
         try {
             statement = DatabaseConnection.getConnection().createStatement();
-            String sqlCompanyId = "SELECT cp_id FROM cp__company WHERE cp_ticker ='" + cTicker + "'";
-            ResultSet resultCompanyId = statement.executeQuery(sqlCompanyId);
+            String sqlCompanyDetails = "SELECT * FROM cp__company WHERE cp_ticker ='" + cTicker + "'";
+            ResultSet resultCompanyDetails = statement.executeQuery(sqlCompanyDetails);
 
-            if (resultCompanyId.next()) companyId = resultCompanyId.getInt("cp_id");
+            if (resultCompanyDetails.next()) {
+                companyId = resultCompanyDetails.getInt("cp_id");
+                cName = resultCompanyDetails.getString("cp_name");
+                cLast = resultCompanyDetails.getDouble("cp_last");
+                cPChange = resultCompanyDetails.getDouble("cp_p_change");
 
+            }
         } catch (SQLException throwables) {
             Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();
             throwables.printStackTrace();
@@ -81,8 +86,45 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
 
         setData();
-        getFromDb();
+        getDataFromDb();
         drawChart();
+        setMaxQuantityLength();
+
+        // Action on quantity edited
+        quantityEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Integer quantity = null;
+
+                if (s.length() > 0) {
+                    try {
+                        quantity = Integer.parseInt(s.toString());
+                        Double result = quantity * cLast;
+
+                        quantityConverterTv.setText(s);
+                        resultConverterTv.setText(FormatHelper.doubleToFourDecimal(result));
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(CompanyDetailsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        quantityConverterTv.setText("0");
+                        resultConverterTv.setText("0");
+                        e.printStackTrace();
+                    }
+                } else {
+                    quantityConverterTv.setText("0");
+                    resultConverterTv.setText("0");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     /* ######### Database communication ######### */
@@ -99,7 +141,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
         Toast.makeText(this, "Kupiono akcje!", Toast.LENGTH_SHORT).show();
         quantityEt.setText("");
-        getFromDb();
+        getDataFromDb();
     }
 
     public void sellStockBtn(View view) {
@@ -115,33 +157,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
         Toast.makeText(this, "Sprzedano akcje!", Toast.LENGTH_SHORT).show();
         quantityEt.setText("");
-        getFromDb();
-    }
-
-    /* ######### Get data from passed extras ######### */
-    private void getData() {
-        if (getIntent().hasExtra("name") && getIntent().hasExtra("ticker") &&
-                getIntent().hasExtra("last") && getIntent().hasExtra("pChange")) {
-
-            cName = getIntent().getStringExtra("name");
-            cTicker = getIntent().getStringExtra("ticker");
-            cPChange = getIntent().getStringExtra("pChange");
-
-            String cLastBufor = getIntent().getStringExtra("last");
-            cLastBufor = cLastBufor.replace(",", ".");
-            cLast = Double.parseDouble(cLastBufor);
-        } else {
-            Toast.makeText(this, "Brak danych", Toast.LENGTH_SHORT);
-        }
-
-        String pChangeBufor = cPChange;
-        pChangeBufor = pChangeBufor.replace("%", "");
-        pChangeBufor = pChangeBufor.replace(",", ".");
-        try {
-            pChangeValue = Double.parseDouble(pChangeBufor);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        getDataFromDb();
     }
 
     /* ######### Set data in layout from passed extras ######### */
@@ -149,25 +165,27 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
         cNameTv.setText(cName);
         cTickerTv.setText(cTicker);
         cLastTv.setText(Double.toString(cLast));
-        cPChangeTv.setText(cPChange);
+        cPChangeTv.setText(cPChange.toString());
 
         /* Set adequate text color and symbol depending of change value */
-        if (pChangeValue == 0) {
+        if (cPChange == 0) {
             changeSymbolView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_no_change_grey_24, null));
             cPChangeTv.setTextColor(ContextCompat.getColor(this, R.color.colorText));
-        } else if (pChangeValue > 0) {
+        } else if (cPChange > 0) {
             changeSymbolView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_arrow_drop_up_green_24, null));
             cPChangeTv.setTextColor(ContextCompat.getColor(this, R.color.colorTrendingUp));
-        } else if (pChangeValue < 0) {
+        } else if (cPChange < 0) {
             changeSymbolView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_arrow_drop_down_red_24, null));
             cPChangeTv.setTextColor(ContextCompat.getColor(this, R.color.colorTrendingDown));
         }
 
-        priceConverterTv.setText("0 x " + Double.toString(cLast) + " = 0");
+        quantityConverterTv.setText("0");
+        priceConverterTv.setText(Double.toString(cLast));
+        resultConverterTv.setText("0");
     }
 
     /* ######### Get data from database and set it on layout ######### */
-    private void getFromDb() {
+    private void getDataFromDb() {
         Statement statement = null;
         ResultSet resultSet;
         String sql;
@@ -183,7 +201,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
             }
 
             ownedNumTv.setText(ownedQuantity.toString());
-            estimatedNumTv.setText(doubleToTwoDecimal(ownedQuantity * cLast));
+            estimatedNumTv.setText(FormatHelper.doubleToTwoDecimal(ownedQuantity * cLast));
 
             // Get company historic values from last 30 days
             sql = "SELECT * FROM cp_history WHERE ch_ticker = '"+ cTicker +"' AND ch_timestamp > " +
@@ -203,6 +221,21 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
             throwables.printStackTrace();
         }
 
+    }
+
+    private void setMaxQuantityLength(){
+        // Function must be called after getting last stock price
+        InputFilter[] editFilters = quantityEt.getFilters();
+        InputFilter[] newFilters = new InputFilter[editFilters.length + 1];
+        System.arraycopy(editFilters, 0, newFilters, 0, editFilters.length);
+
+        if (cLast < 9.99) newFilters[editFilters.length] = new InputFilter.LengthFilter(6);
+        else if ((cLast < 99.99)) newFilters[editFilters.length] = new InputFilter.LengthFilter(5);
+        else if ((cLast < 999.99)) newFilters[editFilters.length] = new InputFilter.LengthFilter(4);
+        else if ((cLast < 9999.99)) newFilters[editFilters.length] = new InputFilter.LengthFilter(3);
+        else if ((cLast < 99999.99)) newFilters[editFilters.length] = new InputFilter.LengthFilter(2);
+
+        quantityEt.setFilters(newFilters);
     }
 
     /* ######### Draw chart ######### */
@@ -247,15 +280,6 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
 
     /* ######### Other functions ######### */
-
-    // Convert double value into String with two decimal places precision
-    private String doubleToTwoDecimal(Double number) {
-        // Format Double to two decimal places
-        DecimalFormat df = new DecimalFormat("0.00");
-        df.setRoundingMode(RoundingMode.DOWN);
-        return df.format(number);
-    }
-
     // Function that is used to format X axis on the chart
     private ArrayList<String> getDate() {
         SimpleDateFormat formatFromDatabase = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -287,7 +311,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
         ownedNumTv = findViewById(R.id.act_cdetails_owned_num_tv);
         estimatedNumTv = findViewById(R.id.act_cdetails_estimated_num_tv);
-        priceConverterTv = findViewById(R.id.act_cdetails_price_converter_tv);
+        priceConverterTv = findViewById(R.id.act_cdetails_price_price_converter_tv);
+        quantityConverterTv = findViewById(R.id.act_cdetails_quantity_price_converter_tv);
+        resultConverterTv = findViewById(R.id.act_cdetails_result_price_converter_tv);
+
         quantityEt = findViewById(R.id.act_cdetails_quantity_et);
 
         mLineChart = findViewById(R.id.act_cdetails_linearchart);

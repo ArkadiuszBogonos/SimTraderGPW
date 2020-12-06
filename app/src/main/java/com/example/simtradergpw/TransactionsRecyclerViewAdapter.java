@@ -40,17 +40,17 @@ public class TransactionsRecyclerViewAdapter extends RecyclerView.Adapter<Transa
         StockRecord mStockRecord = wig20ArrayList.get(position);
         final String sTicker = mStockRecord.getTicker();
         final String sTimeStamp = mStockRecord.getTimeStamp();
-        final String sPrice = mStockRecord.getLast();
+        final Double sPrice = mStockRecord.getLast();
         final Integer sQuantity = mStockRecord.getOwnedQuantity();
         final Boolean isBuy = mStockRecord.getIsBuy();
 
-        final Double sTotal = Double.parseDouble( mStockRecord.getLast().replace(",", ".")) * mStockRecord.getOwnedQuantity();
+        final Double sTotal = sPrice * sQuantity;
 
         holder.tickerTv.setText(sTicker);
         holder.timestampTv.setText(sTimeStamp);
         holder.quantityTv.setText(sQuantity.toString());
-        holder.priceTv.setText(sPrice);
-        holder.totalTv.setText(doubleToTwoDecimal(sTotal));
+        holder.priceTv.setText(sPrice.toString());
+        holder.totalTv.setText(FormatHelper.doubleToTwoDecimal(sTotal));
 
         if (isBuy) {
             holder.directionTv.setText("Kupno");
@@ -82,13 +82,5 @@ public class TransactionsRecyclerViewAdapter extends RecyclerView.Adapter<Transa
             directionSymblView = itemView.findViewById(R.id.adapter_transactions_direction_symbol);
             mainLayout = itemView.findViewById(R.id.adapter_transactions_main_layout);
         }
-    }
-
-    /* ######### Other functions ######### */
-    private String doubleToTwoDecimal(Double number) {
-        // Format Double to two decimal places
-        DecimalFormat df = new DecimalFormat("0.00");
-        df.setRoundingMode(RoundingMode.DOWN);
-        return df.format(number);
     }
 }

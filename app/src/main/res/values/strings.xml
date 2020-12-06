@@ -18,8 +18,9 @@
     <string name="wallet_value">Wartość porfela:</string>
     <string name="money">Środki pieniężne:</string>
     <string name="owned_stocks_value">Wartość papierów:</string>
-    <string name="loans">Kredyty:</string>
-    
+    <string name="loans_colon">Kredyty:</string>
+    <string name="loans">Kredyty</string>
+
     <!--Transactions history-->
     <string name="transactions">Transakcje</string>
     <string name="transactions_history">Historia transakcji</string>
@@ -60,4 +61,9 @@
     <!--Images desciptions-->
     <string name="img_change_desc">Symbol zmiany procentowej (Może być dodatni, ujemny lub neutralny)</string>
     <string name="image_with_brands_logo">Obraz z logo aplikacji</string>
+
+    <!--Other-->
+    <string name="converter">Przelicznik: </string>
+    <string name="times_symbol">x</string>
+    <string name="equality_symbol">=</string>
 </resources>

@@ -11,20 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- Login panel activity -->
+        <activity android:name=".LoansActivity"></activity>
+        <activity android:name=".activity.SingleCompanyTransactionsActivity" /> <!-- Login panel activity -->
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-        </activity>
-        <!-- Sign Up activity -->
-        <activity android:name=".activity.SignUpActivity" />
-        <!-- App's main panel activity -->
-        <activity android:name=".activity.MainActivity" />
-        <!-- Company details panel -->
-        <activity android:name=".activity.CompanyDetailsActivity" android:label="Company details"/>
+        </activity> <!-- Sign Up activity -->
+        <activity android:name=".activity.SignUpActivity" /> <!-- App's main panel activity -->
+        <activity android:name=".activity.MainActivity" /> <!-- Company details panel -->
+        <activity
+            android:name=".activity.CompanyDetailsActivity"
+            android:label="Company details" />
     </application>
 
 </manifest>

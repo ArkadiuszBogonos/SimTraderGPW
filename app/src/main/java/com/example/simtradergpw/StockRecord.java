@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class StockRecord {
     private String name;
     private String ticker;
-    private String last;
-    private String percentageChange;
+    private Double last;
+    private Double percentageChange;
     private Integer ownedQuantity;
     private String timeStamp;
     private Boolean isBuy;
 
 
-    public StockRecord(String name, String ticker, String last, String percentageChange) {
+    public StockRecord(String name, String ticker, Double last, Double percentageChange) {
         this.name = name;
         this.ticker = ticker;
         this.last = last;
@@ -22,7 +22,7 @@ public class StockRecord {
         this.isBuy = null;
     }
 
-    public StockRecord(String name, String ticker, String last, String percentageChange, Integer ownedQuantity) {
+    public StockRecord(String name, String ticker, Double last, Double percentageChange, Integer ownedQuantity) {
         this.name = name;
         this.ticker = ticker;
         this.last = last;
@@ -32,7 +32,7 @@ public class StockRecord {
         this.isBuy = null;
     }
 
-    public StockRecord(String name, String ticker, String last, String percentageChange, Integer ownedQuantity, String timeStamp, Boolean isBuy) {
+    public StockRecord(String name, String ticker, Double last, Double percentageChange, Integer ownedQuantity, String timeStamp, Boolean isBuy) {
         this.name = name;
         this.ticker = ticker;
         this.last = last;
@@ -52,11 +52,11 @@ public class StockRecord {
         return ticker;
     }
 
-    public String getLast() {
+    public Double getLast() {
         return last;
     }
 
-    public String getPercentageChange() {
+    public Double getPercentageChange() {
         return percentageChange;
     }
 
@@ -78,11 +78,11 @@ public class StockRecord {
         this.ticker = ticker;
     }
 
-    public void setLast(String last) {
+    public void setLast(Double last) {
         this.last = last;
     }
 
-    public void setPercentageChange(String percentageChange) {
+    public void setPercentageChange(Double percentageChange) {
         this.percentageChange = percentageChange;
     }
     public void setOwnedQuantity(Integer ownedQuantity) { this.ownedQuantity = ownedQuantity; }

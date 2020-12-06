@@ -22,8 +22,8 @@ public class Wig20Fragment extends Fragment {
     Runnable mWig20Updater = new Runnable() {
         @Override
         public void run() {
-            WebGateway webGateway = new WebGateway();
-            mWig20records = webGateway.getPricesWig20();
+            Wig20 wig20 = new Wig20();
+            mWig20records = wig20.getPricesWig20(getContext());
             if (mWig20records != null) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -31,7 +31,6 @@ public class Wig20Fragment extends Fragment {
                         showWig20();
                     }
                 });
-
             }
         }
     };

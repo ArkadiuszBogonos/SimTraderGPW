@@ -42,33 +42,24 @@ public class Wig20RecyclerViewAdapter extends RecyclerView.Adapter<Wig20Recycler
         StockRecord mStockRecord = wig20ArrayList.get(position);
         final String sName = mStockRecord.getName();
         final String sTicker = mStockRecord.getTicker();
-        final String sLast = mStockRecord.getLast();
-        final String sPercentageChange = mStockRecord.getPercentageChange();
+        final Double sLast = mStockRecord.getLast();
+        final Double sPercentageChange = mStockRecord.getPercentageChange();
 
         holder.nameTv.setText(sName);
         holder.tickerTv.setText(sTicker);
-        holder.lastTv.setText(sLast);
-        holder.pchangeTv.setText(sPercentageChange);
+        holder.lastTv.setText(sLast.toString());
+        holder.pchangeTv.setText(sPercentageChange.toString()+"%");
 
-        String pChangeBufor = sPercentageChange;
-        pChangeBufor = pChangeBufor.replace("%", "");
-        pChangeBufor = pChangeBufor.replace(",", ".");
-        Double pChangeValue = null;
-        try {
-            pChangeValue = Double.parseDouble(pChangeBufor);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
 
-        if (pChangeValue == 0) {
+        if (sPercentageChange == 0) {
             holder.changeSymbolIv.setImageResource(R.drawable.ic_baseline_no_change_grey_24);
             holder.pchangeTv.setTextColor(ContextCompat.getColor(context, R.color.colorText));
         }
-        else if (pChangeValue > 0) {
+        else if (sPercentageChange > 0) {
             holder.changeSymbolIv.setImageResource(R.drawable.ic_baseline_arrow_drop_up_green_24);
             holder.pchangeTv.setTextColor(ContextCompat.getColor(context, R.color.colorTrendingUp));
         }
-        else if (pChangeValue < 0) {
+        else if (sPercentageChange < 0) {
             holder.changeSymbolIv.setImageResource(R.drawable.ic_baseline_arrow_drop_down_red_24);
             holder.pchangeTv.setTextColor(ContextCompat.getColor(context, R.color.colorTrendingDown));
         }
@@ -77,10 +68,10 @@ public class Wig20RecyclerViewAdapter extends RecyclerView.Adapter<Wig20Recycler
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CompanyDetailsActivity.class);
-                intent.putExtra("name", sName);
+//                intent.putExtra("name", sName);
                 intent.putExtra("ticker", sTicker);
-                intent.putExtra("last", sLast);
-                intent.putExtra("pChange", sPercentageChange);
+//                intent.putExtra("last", sLast.toString());
+//                intent.putExtra("pChange", sPercentageChange.toString());
                 context.startActivity(intent);
             }
         });
