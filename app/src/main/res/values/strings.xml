@@ -34,6 +34,13 @@
     <string name="ranking">Ranking</string>
     <string name="take_loan">Zaciągnij kredyt</string>
     <string name="pay_loan">Spłać kredyt</string>
+    <string name="reset_progress">Resetuj postępy</string>
+    <string name="reset_progress_dialog">Uwaga! Czy na pewno chcesz zresetować postępy? Tej operacji nie można cofnąć.</string>
+    <string name="reset_progress_toast">Zresetowano postępy</string>
+
+    <!--Loans-->
+    <string name="sum_of_active_loans_colon">Suma bieżących kredytów:</string>
+    <string name="comission_value_colon">W tym prowizja:</string>
 
     <!--Validation messages-->
     <string name="incorrect_email_structure">Niepoprawny adres e-mail.</string>

@@ -1,27 +1,25 @@
 package com.example.simtradergpw;
 
-import java.util.Comparator;
-
 public class UserRecord implements Comparable<UserRecord>{
 
     private Integer userId;
     private String login;
-    private Double money;
+    private Double balance;
     private Double ownedStocksValue;
     private Double loans;
 
-    public UserRecord(Integer userId, String login, Double money, Double loans) {
+    public UserRecord(Integer userId, String login, Double balance, Double loans) {
         this.userId = userId;
         this.login = login;
-        this.money = money;
+        this.balance = balance;
         this.loans = loans;
         this.ownedStocksValue = null;
     }
 
-    public UserRecord(Integer userId, String login, Double money, Double loans, Double ownedStocksValue) {
+    public UserRecord(Integer userId, String login, Double balance, Double loans, Double ownedStocksValue) {
         this.userId = userId;
         this.login = login;
-        this.money = money;
+        this.balance = balance;
         this.loans = loans;
         this.ownedStocksValue = ownedStocksValue;
     }
@@ -42,12 +40,12 @@ public class UserRecord implements Comparable<UserRecord>{
         this.login = login;
     }
 
-    public Double getMoney() {
-        return money;
+    public Double getBalance() {
+        return balance;
     }
 
-    public void setMoney(Double money) {
-        this.money = money;
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     public Double getOwnedStocksValue() {
@@ -68,8 +66,8 @@ public class UserRecord implements Comparable<UserRecord>{
 
     @Override
     public int compareTo(UserRecord o) {
-        Double o1WalletValue = this.getMoney() + this.getOwnedStocksValue() - this.getLoans();
-        Double o2WalletValue = o.getMoney() + o.getOwnedStocksValue() - o.getLoans();
+        Double o1WalletValue = this.getBalance() + this.getOwnedStocksValue() - this.getLoans();
+        Double o2WalletValue = o.getBalance() + o.getOwnedStocksValue() - o.getLoans();
 
         if (o1WalletValue > o2WalletValue) return -1;
         else if (o1WalletValue.equals(o2WalletValue)) return 0;

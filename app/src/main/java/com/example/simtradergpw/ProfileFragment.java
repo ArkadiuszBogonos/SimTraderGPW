@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.example.simtradergpw.activity.LoginActivity;
 import com.example.simtradergpw.activity.MainActivity;
 import com.example.simtradergpw.activity.RankingActivity;
 import com.example.simtradergpw.activity.StatisticsActivity;
+import com.example.simtradergpw.dialogs.ResetProgressDialog;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -41,7 +43,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     Integer userId;
     LineChart walletValueLineChart;
-    Button loansBtn, statsBtn, rankBtn;
+    TextView loginTv;
+    Button loansBtn, statsBtn, rankBtn, resetBtn;
     ArrayList<ChartData> userBalanceHistoryList = new ArrayList<>();
 
     @Nullable
@@ -57,7 +60,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         getDataFromDb();
         drawLineChart(walletValueLineChart, userBalanceHistoryList, "Wartość portfela");
 
-
+        String login = sharedPreferences.getString("userLogin", "Błąd");
+        loginTv.setText(login);
 
         return view;
     }
@@ -72,11 +76,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             statement = DatabaseConnection.getConnection().createStatement();
 
             // Get user balance history
-            sql = "SELECT * FROM us_wallet_value_h WHERE uw_usid = "+ userId +" AND uw_timestamp > dateadd(day, -365, getdate())";
+            sql = "SELECT * FROM us_wallet_value_h WHERE uwh_usid = "+ userId +" AND uwh_timestamp > dateadd(day, -365, getdate())";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                Double price = resultSet.getDouble("uw_value");
-                String timeStamp = resultSet.getString("uw_timestamp");
+                Double price = resultSet.getDouble("uwh_value");
+                String timeStamp = resultSet.getString("uwh_timestamp");
 
                 ChartData record = new ChartData(price, timeStamp);
                 userBalanceHistoryList.add(record);
@@ -145,18 +149,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return label;
     }
 
-    // Hook on GUI elements
-    private void connectVariablesToGui(View view) {
-        walletValueLineChart = view.findViewById(R.id.fr_profile_wallet_value_linechart);
-        loansBtn = view.findViewById(R.id.fr_profile_loans_btn);
-        statsBtn = view.findViewById(R.id.fr_profile_stats_btn);
-        rankBtn = view.findViewById(R.id.fr_profile_rank_btn);
-
-        loansBtn.setOnClickListener(this);
-        statsBtn.setOnClickListener(this);
-        rankBtn.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View view) {
         Intent intent = null;
@@ -175,6 +167,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getContext(), RankingActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.fr_profile_reset_btn:
+                openDialog();
+                break;
         }
     }
+
+    // Hook on GUI elements
+    private void connectVariablesToGui(View view) {
+        walletValueLineChart = view.findViewById(R.id.fr_profile_wallet_value_linechart);
+
+        loginTv = view.findViewById(R.id.fr_profile_login_tv);
+
+        loansBtn = view.findViewById(R.id.fr_profile_loans_btn);
+        statsBtn = view.findViewById(R.id.fr_profile_stats_btn);
+        rankBtn = view.findViewById(R.id.fr_profile_rank_btn);
+        resetBtn = view.findViewById(R.id.fr_profile_reset_btn);
+
+        loansBtn.setOnClickListener(this);
+        statsBtn.setOnClickListener(this);
+        rankBtn.setOnClickListener(this);
+        resetBtn.setOnClickListener(this);
+    }
+
+    private void openDialog() {
+        ResetProgressDialog dialog = new ResetProgressDialog();
+        dialog.show(getFragmentManager(), "Reset dialog");
+    }
+
 }

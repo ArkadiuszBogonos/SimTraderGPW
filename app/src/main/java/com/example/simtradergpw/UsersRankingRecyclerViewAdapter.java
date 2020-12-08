@@ -2,7 +2,6 @@ package com.example.simtradergpw;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simtradergpw.activity.LoginActivity;
-import com.example.simtradergpw.activity.RankingActivity;
 
 import java.util.ArrayList;
 
@@ -49,7 +46,7 @@ public class UsersRankingRecyclerViewAdapter extends RecyclerView.Adapter<UsersR
         UserRecord user = usersArrayList.get(position);
 
         String login = user.getLogin();
-        Double money = user.getMoney();
+        Double money = user.getBalance();
         Double loans = user.getLoans();
         Double ownedStocksVal = user.getOwnedStocksValue();
         Double walletValue = money + ownedStocksVal - loans;

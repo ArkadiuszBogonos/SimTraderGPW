@@ -44,41 +44,22 @@ public class RankingActivity extends AppCompatActivity {
         try {
             statement = DatabaseConnection.getConnection().createStatement();
 
-            sql = "SELECT * FROM us__users";
+            sql = "SELECT us_id, us_login, us_balance, us_loan, us_owned_stocks_value FROM us__users";
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
                 Integer userId;
                 String login;
-                Double money, loans;
+                Double money, loans, ownedStocksValue;
 
                 userId = resultSet.getInt("us_id");
                 login = resultSet.getString("us_login");
                 money = resultSet.getDouble("us_balance");
                 loans = resultSet.getDouble("us_loan");
+                ownedStocksValue = resultSet.getDouble("us_owned_stocks_value");
 
-                UserRecord user = new UserRecord(userId,login,money, loans);
+                UserRecord user = new UserRecord(userId,login,money, loans, ownedStocksValue);
                 usersArrayList.add(user);
-            }
-
-            // Get owned stocks value
-            for (int i = 0; i < usersArrayList.size(); i++) {
-                Integer userId = usersArrayList.get(i).getUserId();
-
-                sql = "SELECT uw_quantity, cp_last FROM us_wallet INNER JOIN cp__company ON uw_cpid = cp_id WHERE uw_usid = " + userId
-                        + " AND uw_quantity > 0";
-                resultSet = statement.executeQuery(sql);
-
-                Double price;
-                Integer quantity;
-                Double ownedStocksValue = 0.0;
-
-                while (resultSet.next()) {
-                    quantity = resultSet.getInt("uw_quantity");
-                    price = resultSet.getDouble("cp_last");
-                    ownedStocksValue += price * quantity;
-                }
-                usersArrayList.get(i).setOwnedStocksValue(ownedStocksValue);
             }
 
 

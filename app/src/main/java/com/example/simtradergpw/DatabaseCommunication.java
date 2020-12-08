@@ -3,6 +3,8 @@ package com.example.simtradergpw;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.simtradergpw.activity.LoginActivity;
 
 import java.sql.ResultSet;
@@ -34,10 +36,10 @@ public final class DatabaseCommunication {
             String sqlUpdateBalance = "UPDATE us__users SET us_balance = us_balance - " + total + " WHERE us_id=" + userId;
             statement.executeUpdate(sqlUpdateBalance);
 
-            // Save in user balance history
-            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
-                    "VALUES (" + userId + ", (SELECT us_balance FROM us__users WHERE us_id = " + userId + "), '" + timeStamp + "')";
-            statement.executeUpdate(sqlInsertBalanceHistory);
+//            // Save in user balance history
+//            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
+//                    "VALUES (" + userId + ", (SELECT us_balance FROM us__users WHERE us_id = " + userId + "), '" + timeStamp + "')";
+//            statement.executeUpdate(sqlInsertBalanceHistory);
 
             // Check whether user already have that company stock in wallet
             String sqlIsInWallet = "SELECT uw_id FROM us_wallet WHERE uw_usid = " + userId + " AND uw_cpid= " + companyId;
@@ -56,7 +58,7 @@ public final class DatabaseCommunication {
                 statement.executeUpdate(sqlInsertIntoWallet);
             }
 
-            saveInWUserWalletValueHistory(context, userId, timeStamp);
+//            saveInWUserWalletValueHistory(context, userId, timeStamp);
             saveInTransactionHistory(context, userId, companyId, ACTION_TYPE, quantity, pricePerStock);
 
         } catch (SQLException throwables) {
@@ -89,12 +91,12 @@ public final class DatabaseCommunication {
             String sqlUpdateBalance = "UPDATE us__users SET us_balance = us_balance + " + total + " WHERE us_id=" + userId;
             updatedRows = statement.executeUpdate(sqlUpdateBalance);
 
-            // Save in user balance history
-            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
-                    "VALUES (" + userId + ", (SELECT us_balance FROM us__users WHERE us_id = " + userId + "), '" + timeStamp + "')";
-            Integer insertedRows = statement.executeUpdate(sqlInsertBalanceHistory);
+//            // Save in user balance history
+//            String sqlInsertBalanceHistory = "INSERT INTO us_balance_h (ub_usid, ub_balance, ub_timestamp) " +
+//                    "VALUES (" + userId + ", (SELECT us_balance FROM us__users WHERE us_id = " + userId + "), '" + timeStamp + "')";
+//            Integer insertedRows = statement.executeUpdate(sqlInsertBalanceHistory);
 
-            saveInWUserWalletValueHistory(context, userId, timeStamp);
+//            saveInWUserWalletValueHistory(context, userId, timeStamp);
             saveInTransactionHistory(context, userId, companyId, ACTION_TYPE, quantity, pricePerStock);
 
         } catch (SQLException throwables) {
@@ -109,6 +111,36 @@ public final class DatabaseCommunication {
 
             String sqlAddNewUser = "INSERT INTO us__users VALUES ('" + uLogin + "', '" + uEmail + "', '" + uPassword + "', " + START_BALANCE + ", NULL, NULL, NULL)";
             statement.executeUpdate(sqlAddNewUser);
+
+        } catch (SQLException throwables) {
+            Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void resetProgress(Context context, int userId){
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        try {
+            statement= DatabaseConnection.getConnection().createStatement();
+
+            String sql = "UPDATE us__users SET us_balance = 10000, us_loan = 0, us_owned_stocks_value = 0" +
+                    " WHERE us_id="+userId;
+            statement.executeUpdate(sql);
+
+            sql = "DELETE FROM us_wallet WHERE uw_usid = " + userId;
+            statement.executeUpdate(sql);
+
+            sql = "DELETE FROM us_transactions_h WHERE ut_usid = " + userId;
+            statement.executeUpdate(sql);
+
+            sql = "DELETE FROM us_wallet_value_h WHERE uwh_usid = " + userId;
+            statement.executeUpdate(sql);
+
+
+            sql = "INSERT INTO us_wallet_value_h (uwh_usid, uwh_value, uwh_timestamp) " +
+                    "VALUES (" + userId + ", 10000, '" + timeStamp + "')";
+            statement.executeUpdate(sql);
+            statement.executeUpdate(sql);
 
         } catch (SQLException throwables) {
             Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
