@@ -165,7 +165,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
         cNameTv.setText(cName);
         cTickerTv.setText(cTicker);
         cLastTv.setText(Double.toString(cLast));
-        cPChangeTv.setText(cPChange.toString());
+        cPChangeTv.setText(cPChange.toString()+"%");
 
         /* Set adequate text color and symbol depending of change value */
         if (cPChange == 0) {

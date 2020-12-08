@@ -87,6 +87,6 @@ public class TransactionsFragment extends Fragment {
 
 
     private void connectVariablesToGui(View view) {
-        transactionHistoryRecyclerView = view.findViewById(R.id.fr_transactions_transactions_recyclerview);
+        transactionHistoryRecyclerView = view.findViewById(R.id.act_ranking_recyclerview);
     }
 }

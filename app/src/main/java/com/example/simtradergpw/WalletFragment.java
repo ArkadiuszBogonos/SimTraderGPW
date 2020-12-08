@@ -79,8 +79,6 @@ public class WalletFragment extends Fragment {
 
                     StockRecord record = Wig20Fragment.mWig20records.get(i);
 
-
-
                     if (tickerFromDb.equals(record.getTicker())) {
                         String name = record.getName();
                         String ticker = record.getTicker();

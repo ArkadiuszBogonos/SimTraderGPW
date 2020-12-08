@@ -17,4 +17,10 @@ public final class FormatHelper {
         df.setRoundingMode(RoundingMode.DOWN);
         return df.format(number);
     }
+
+    public static String cutAfterDot(Double number) {
+        DecimalFormat df = new DecimalFormat("0");
+        df.setRoundingMode(RoundingMode.DOWN);
+        return df.format(number);
+    }
 }

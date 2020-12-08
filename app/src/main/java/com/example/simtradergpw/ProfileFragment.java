@@ -1,10 +1,13 @@
 package com.example.simtradergpw;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,7 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.simtradergpw.activity.LoansActivity;
 import com.example.simtradergpw.activity.LoginActivity;
+import com.example.simtradergpw.activity.MainActivity;
+import com.example.simtradergpw.activity.RankingActivity;
+import com.example.simtradergpw.activity.StatisticsActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -31,9 +38,10 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
     Integer userId;
     LineChart walletValueLineChart;
+    Button loansBtn, statsBtn, rankBtn;
     ArrayList<ChartData> userBalanceHistoryList = new ArrayList<>();
 
     @Nullable
@@ -48,20 +56,10 @@ public class ProfileFragment extends Fragment {
         connectVariablesToGui(view);
         getDataFromDb();
         drawLineChart(walletValueLineChart, userBalanceHistoryList, "Wartość portfela");
+
+
+
         return view;
-    }
-
-    /* Button listeners */
-    public void loansButton(View view) {
-
-    }
-
-    public void statsButton(View view) {
-
-    }
-
-    public void rankButton(View view) {
-
     }
 
     /* ######### Get data from database ######### */
@@ -150,5 +148,33 @@ public class ProfileFragment extends Fragment {
     // Hook on GUI elements
     private void connectVariablesToGui(View view) {
         walletValueLineChart = view.findViewById(R.id.fr_profile_wallet_value_linechart);
+        loansBtn = view.findViewById(R.id.fr_profile_loans_btn);
+        statsBtn = view.findViewById(R.id.fr_profile_stats_btn);
+        rankBtn = view.findViewById(R.id.fr_profile_rank_btn);
+
+        loansBtn.setOnClickListener(this);
+        statsBtn.setOnClickListener(this);
+        rankBtn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.fr_profile_loans_btn:
+                intent = new Intent(getContext(), LoansActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.fr_profile_stats_btn:
+                intent = new Intent(getContext(), StatisticsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.fr_profile_rank_btn:
+                intent = new Intent(getContext(), RankingActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

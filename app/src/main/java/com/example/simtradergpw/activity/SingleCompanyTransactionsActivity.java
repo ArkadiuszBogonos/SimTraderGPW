@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.simtradergpw.DatabaseConnection;
@@ -81,6 +80,6 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
     }
 
     private void connectVariablesToGui() {
-        transactionHistoryRecyclerView = findViewById(R.id.fr_transactions_transactions_recyclerview);
+        transactionHistoryRecyclerView = findViewById(R.id.act_ranking_recyclerview);
     }
 }
