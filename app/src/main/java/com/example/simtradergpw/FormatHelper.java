@@ -23,4 +23,9 @@ public final class FormatHelper {
         df.setRoundingMode(RoundingMode.DOWN);
         return df.format(number);
     }
+
+    public static String doubleToPercent(Double decimal) {
+        decimal = decimal * 100;
+        return decimal.toString() + "%";
+    }
 }

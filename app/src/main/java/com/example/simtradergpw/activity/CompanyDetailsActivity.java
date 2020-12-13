@@ -1,5 +1,6 @@
 package com.example.simtradergpw.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -137,10 +139,16 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
             e.printStackTrace();
         }
 
-        DatabaseCommunication.buyStock(this, userId, companyId, quantity, cLast);
+        Double totalPrice = quantity * cLast;
 
-        Toast.makeText(this, "Kupiono akcje!", Toast.LENGTH_SHORT).show();
-        quantityEt.setText("");
+        if (DatabaseCommunication.userHaveEnoughMoney(this, userId, totalPrice)) {
+            DatabaseCommunication.buyStock(this, userId, companyId, quantity, cLast);
+            Toast.makeText(this, "Kupiono akcje!", Toast.LENGTH_SHORT).show();
+            quantityEt.setText("");
+        } else {
+            Toast.makeText(this, "Niewystarczająca ilość gotówki", Toast.LENGTH_SHORT).show();
+        }
+
         getDataFromDb();
     }
 
@@ -153,11 +161,21 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
             e.printStackTrace();
         }
 
-        DatabaseCommunication.sellStock(this, userId, companyId, quantity, cLast);
+        if (DatabaseCommunication.userHaveEnoughStocks(this, userId, companyId, quantity)) {
+            DatabaseCommunication.sellStock(this, userId, companyId, quantity, cLast);
+            Toast.makeText(this, "Sprzedano akcje!", Toast.LENGTH_SHORT).show();
+            quantityEt.setText("");
+        } else {
+            Toast.makeText(this, "Nie posiadasz tylu akcji", Toast.LENGTH_SHORT).show();
+        }
 
-        Toast.makeText(this, "Sprzedano akcje!", Toast.LENGTH_SHORT).show();
-        quantityEt.setText("");
         getDataFromDb();
+    }
+
+    public void gotoTransactionsHistory(View view) {
+        Intent intent = new Intent(this, SingleCompanyTransactionsActivity.class);
+        intent.putExtra("ticker", cTicker);
+        startActivity(intent);
     }
 
     /* ######### Set data in layout from passed extras ######### */
@@ -243,6 +261,12 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
         mLineChart.setOnChartValueSelectedListener(this);
         mLineChart.setDragEnabled(false);
         mLineChart.setScaleEnabled(false);
+        mLineChart.animateX(1000);
+
+        // Set chart description
+        Description description = new Description();
+        description.setText(" ");
+        mLineChart.setDescription(description);
 
         // Hide labels on right Y axis
         YAxis rightAxis = mLineChart.getAxisRight();

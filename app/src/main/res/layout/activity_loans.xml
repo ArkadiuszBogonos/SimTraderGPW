@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/act_loans_comission_tv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.LoansActivity">
@@ -47,148 +48,150 @@
         app:layout_constraintTop_toBottomOf="@+id/act_loans_title_background" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/act_loans_label_loans_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="@string/sum_of_active_loans_colon"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/comission_value_colon"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/act_loans_label_comission_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/interest_value_colon"
+        app:layout_constraintStart_toStartOf="@+id/act_loans_label_loans_tv"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_label_loans_tv" />
+
+    <TextView
+        android:id="@+id/act_loans_loans_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingDown"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_label_loans_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_label_loans_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_label_loans_tv"
         tools:text="2000" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/act_loans_pln_sufix_tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="@string/pln_sufix"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_loans_value_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_loans_value_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_loans_value_tv" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/act_loans_interest_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="0"
         android:textColor="@color/colorTrendingDown"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_label_comission_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_label_comission_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_label_comission_tv"
         tools:text="0" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/act_loans_pln_sufix_tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="@string/pln_sufix"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_interest_value_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_interest_value_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_interest_value_tv" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/act_loans_balance_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/money"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_loans_top_divider" />
+        app:layout_constraintStart_toStartOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/act_loans_pln_sufix_tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="0"
+        android:layout_marginStart="8dp"
+        android:text="@string/pln_sufix"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_balance_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_balance_amount_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_balance_tv"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/act_loans_balance_amount_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:textColor="@color/colorTrendingUp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_balance_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_balance_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_balance_tv"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="0" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/pln_sufix"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <View
         android:id="@+id/divider18"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_pay_loan_btn" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/act_loans_get_loan_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_default_normal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/btn_default"
+        android:onClick="getLoanBtn"
         android:text="@string/take_loan"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/divider20"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@color/colorDelicateGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_radioGroup" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/act_loans_pay_loan_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/btn_default_normal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/btn_default"
+        android:onClick="payLoanButton"
         android:text="@string/pay_loan"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        android:textColor="@color/colorDelicateGray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_label_paymentDate_tv" />
 
     <View
         android:id="@+id/divider19"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_get_loan_btn" />
 
     <View
         android:id="@+id/divider20"
@@ -199,5 +202,188 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/active_loans"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_title_background" />
+
+    <TextView
+        android:id="@+id/act_loans_label_paymentDate_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/payment_date_colon"
+        app:layout_constraintStart_toStartOf="@+id/act_loans_label_comission_tv"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_label_comission_tv" />
+
+    <TextView
+        android:id="@+id/act_loans_paymentDate_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_label_paymentDate_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_label_paymentDate_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_label_paymentDate_tv"
+        tools:text="11.01.2021" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/new_loan"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/divider18" />
+
+    <TextView
+        android:id="@+id/act_loans_error_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/cannot_take_new_loan_unless_old_is_paid"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_label_days_to_pay_tv" />
+
+    <RadioGroup
+        android:id="@+id/act_loans_radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_error_tv">
+
+        <RadioButton
+            android:id="@+id/act_loans_amount1_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:onClick="checkRadioButtons"
+            android:textColor="@color/colorText"
+            tools:text="2000" />
+
+        <RadioButton
+            android:id="@+id/act_loans_amount2_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:onClick="checkRadioButtons"
+            android:textColor="@color/colorText"
+            tools:text="10 000" />
+
+        <RadioButton
+            android:id="@+id/act_loans_amount3_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:onClick="checkRadioButtons"
+            android:textColor="@color/colorText"
+            tools:text="25 000" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/act_loans_label_intrests_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/interests_colon"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/act_loans_interests_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="2%"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_label_intrests_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_label_intrests_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_label_intrests_tv"
+        tools:text="2%" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/wallet"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/divider19" />
+
+    <View
+        android:id="@+id/divider29"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/act_loans_radioGroup"
+        app:layout_constraintStart_toStartOf="@+id/act_loans_radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_radioGroup" />
+
+    <View
+        android:id="@+id/divider30"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/act_loans_radioGroup"
+        app:layout_constraintEnd_toEndOf="@+id/act_loans_radioGroup"
+        app:layout_constraintStart_toStartOf="@+id/act_loans_radioGroup" />
+
+    <TextView
+        android:id="@+id/act_loans_label_days_to_pay_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/payment_date_colon"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/act_loans_label_intrests_tv" />
+
+    <TextView
+        android:id="@+id/act_loans_days_to_pay_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_label_days_to_pay_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_label_days_to_pay_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_label_days_to_pay_tv"
+        tools:text="30" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="dni"
+        app:layout_constraintBottom_toBottomOf="@+id/act_loans_days_to_pay_tv"
+        app:layout_constraintStart_toEndOf="@+id/act_loans_days_to_pay_tv"
+        app:layout_constraintTop_toTopOf="@+id/act_loans_days_to_pay_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

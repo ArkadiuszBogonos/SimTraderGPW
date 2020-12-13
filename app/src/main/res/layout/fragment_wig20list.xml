@@ -114,14 +114,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.78" />
+            app:layout_constraintGuide_percent="0.77" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.79" />
+            app:layout_constraintGuide_percent="0.78" />
 
         <TextView
             android:id="@+id/fr_wig20list_pchange_tv"

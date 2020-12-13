@@ -5,12 +5,15 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.simtradergpw.activity.LoansActivity;
 import com.example.simtradergpw.activity.LoginActivity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public final class DatabaseCommunication {
     private static final String TAG = "DatabaseCommunication";
@@ -105,11 +108,50 @@ public final class DatabaseCommunication {
         }
     }
 
+    public static void getLoan(Context context, int userId, Double amount, Integer paymentInDays) {
+        Calendar calendar= Calendar.getInstance();
+        calendar.add(Calendar.DATE, paymentInDays);
+        Date targetDate =calendar.getTime();
+        final String paymentDate = new SimpleDateFormat("yyyy-MM-dd").format(targetDate);
+
+
+        try {
+            statement = DatabaseConnection.getConnection().createStatement();
+
+            String sql = "UPDATE us__users SET us_balance = us_balance+"+amount+", us_loan = "+amount+", us_loan_payment_date='"+paymentDate+"'  WHERE us_id="+userId;
+            statement.executeUpdate(sql);
+            Toast.makeText(context, "Zaciągnięto " + amount+ "PLN pożyczki", Toast.LENGTH_LONG).show();
+
+        } catch (SQLException throwables) {
+            Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void payLoan(Context context, int userId, Double amount) {
+        Double totalToPay = amount + amount * LoansActivity.INTEREST_RATE;
+
+        try {
+            statement = DatabaseConnection.getConnection().createStatement();
+
+            String sql = "UPDATE us__users SET us_balance = us_balance-"+totalToPay+
+                    ", us_loan = us_loan-"+amount+", us_loan_payment_date=NULL, " +
+                    "us_paid_loans = us_paid_loans + 1 WHERE us_id="+userId;
+
+            statement.executeUpdate(sql);
+            Toast.makeText(context, "Spłacono pożyczkę!", Toast.LENGTH_LONG).show();
+
+        } catch (SQLException throwables) {
+            Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
+            throwables.printStackTrace();
+        }
+    }
+
     public static void addNewUser(Context context, String uLogin, String uEmail, String uPassword) {
         try {
             statement = DatabaseConnection.getConnection().createStatement();
 
-            String sqlAddNewUser = "INSERT INTO us__users VALUES ('" + uLogin + "', '" + uEmail + "', '" + uPassword + "', " + START_BALANCE + ", NULL, NULL, NULL)";
+            String sqlAddNewUser = "INSERT INTO us__users VALUES ('" + uLogin + "', '" + uEmail + "', '" + uPassword + "', " + START_BALANCE + ", NULL, NULL, 0, NULL, 0)";
             statement.executeUpdate(sqlAddNewUser);
 
         } catch (SQLException throwables) {
@@ -123,8 +165,8 @@ public final class DatabaseCommunication {
         try {
             statement= DatabaseConnection.getConnection().createStatement();
 
-            String sql = "UPDATE us__users SET us_balance = 10000, us_loan = 0, us_owned_stocks_value = 0" +
-                    " WHERE us_id="+userId;
+            String sql = "UPDATE us__users SET us_balance = 10000, us_loan = 0, us_owned_stocks_value = 0," +
+                    " us_loan_payment_date = NULL, us_paid_loans = 0 WHERE us_id="+userId;
             statement.executeUpdate(sql);
 
             sql = "DELETE FROM us_wallet WHERE uw_usid = " + userId;
@@ -145,6 +187,50 @@ public final class DatabaseCommunication {
         } catch (SQLException throwables) {
             Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
             throwables.printStackTrace();
+        }
+    }
+
+    public static boolean userHaveEnoughMoney(Context context, int userId, Double amount){
+        try {
+            statement = DatabaseConnection.getConnection().createStatement();
+            Double userBalance = -1.0;
+
+            String sql = "SELECT us_balance FROM us__users WHERE us_id = " + userId;
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                userBalance = resultSet.getDouble("us_balance");
+            }
+
+            if (userBalance < amount) return false;
+            else return true;
+
+        } catch (SQLException throwables) {
+            Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean userHaveEnoughStocks(Context context, int userId, int companyId, Integer quantity){
+        try {
+            statement = DatabaseConnection.getConnection().createStatement();
+            int ownedQuantity = 0;
+
+            String sql = "SELECT uw_quantity FROM us_wallet WHERE uw_usid = " + userId + " AND uw_cpid = " +companyId;
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                ownedQuantity = resultSet.getInt("uw_quantity");
+            }
+
+            if (ownedQuantity < quantity) return false;
+            else return true;
+
+        } catch (SQLException throwables) {
+            Toast.makeText(context, throwables.getMessage(), Toast.LENGTH_LONG).show();
+            throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -200,4 +286,5 @@ public final class DatabaseCommunication {
             throwables.printStackTrace();
         }
     }
+
 }

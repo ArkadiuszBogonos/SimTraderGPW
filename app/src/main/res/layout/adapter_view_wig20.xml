@@ -85,14 +85,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.78" />
+                app:layout_constraintGuide_percent="0.77" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.80" />
+                app:layout_constraintGuide_percent="0.79" />
 
             <ImageView
                 android:id="@+id/adapter_wig20_change_img"
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.86" />
+                app:layout_constraintGuide_percent="0.85" />
 
             <TextView
                 android:id="@+id/adapter_wig20_pchange_tv"

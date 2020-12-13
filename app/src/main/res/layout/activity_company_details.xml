@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Ilość w portfelu:"
+        android:text="@string/owned_quantity_colon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -296,4 +296,17 @@
             android:layout_weight="1"
             tools:text="0" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_default"
+        android:onClick="gotoTransactionsHistory"
+        app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_title_tv"
+        app:layout_constraintEnd_toEndOf="@+id/act_cdetails_title_background"
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_title_tv"
+        app:srcCompat="@drawable/ic_baseline_history_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

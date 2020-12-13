@@ -25,6 +25,11 @@
     <string name="transactions">Transakcje</string>
     <string name="transactions_history">Historia transakcji</string>
 
+    <!--Single company transactions history-->
+    <string name="invested_colon">Zainwestowano:</string>
+    <string name="balance_colon">Bilans:</string>
+    <string name="sold_colon">Sprzedano:</string>
+
     <!--Profile-->
     <string name="profile">Profil</string>
     <string name="wallet_value_graph">Wykres wartości portfela</string>
@@ -32,15 +37,25 @@
     <string name="show_more">Pokaż więcej</string>
     <string name="stats">Statystyki</string>
     <string name="ranking">Ranking</string>
-    <string name="take_loan">Zaciągnij kredyt</string>
-    <string name="pay_loan">Spłać kredyt</string>
     <string name="reset_progress">Resetuj postępy</string>
     <string name="reset_progress_dialog">Uwaga! Czy na pewno chcesz zresetować postępy? Tej operacji nie można cofnąć.</string>
     <string name="reset_progress_toast">Zresetowano postępy</string>
 
     <!--Loans-->
     <string name="sum_of_active_loans_colon">Suma bieżących kredytów:</string>
-    <string name="comission_value_colon">W tym prowizja:</string>
+    <string name="interest_value_colon">W tym odsetki:</string>
+    <string name="active_loans">Aktywne pożyczki</string>
+    <string name="new_loan">Nowa pożyczka</string>
+    <string name="payment_date_colon">Termin spłaty:</string>
+    <string name="cannot_take_new_loan_unless_old_is_paid">Aby zaciągnąć nową pożyczkę musisz najpierw spłacić poprzednią</string>
+    <string name="interests_colon">Oprocentowanie: </string>
+    <string name="take_loan">Zaciągnij pożyczkę</string>
+    <string name="pay_loan">Spłać pożyczkę</string>
+    <string name="take_loan_message_1">Czy chcesz zaciągnąć pożyczkę na kwotę </string>
+    <string name="take_loan_message_2"> PLN? Termin płatności:</string>
+    <string name="take_loan_message_3">dni.</string>
+    <string name="pay_loan_message_1">Spłacić pożyczkę na sumę</string>
+    <string name="pay_loan_message_2">PLN?</string>
 
     <!--Validation messages-->
     <string name="incorrect_email_structure">Niepoprawny adres e-mail.</string>
@@ -58,9 +73,11 @@
     <string name="name">Nazwa</string>
     <string name="ticker">Ticker</string>
     <string name="last">Kurs</string>
+    <string name="last_colon">Kurs:</string>
     <string name="percentage_change">Zmiana w %</string>
     <string name="quantity">Ilość</string>
     <string name="estimated_value">Szacowana wartość</string>
+    <string name="owned_quantity_colon">Ilość w portfelu:</string>
 
     <!--Currencies-->
     <string name="pln_sufix">PLN</string>

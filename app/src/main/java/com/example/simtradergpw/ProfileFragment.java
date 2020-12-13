@@ -23,6 +23,7 @@ import com.example.simtradergpw.activity.RankingActivity;
 import com.example.simtradergpw.activity.StatisticsActivity;
 import com.example.simtradergpw.dialogs.ResetProgressDialog;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -98,6 +99,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void drawLineChart(LineChart lineChart, ArrayList<ChartData> chartDataArrayList, String label){
         lineChart.setDragEnabled(false);
         lineChart.setScaleEnabled(false);
+        lineChart.animateX(1000);
+
+        // Set chart description
+        Description description = new Description();
+        description.setText(" ");
+        lineChart.setDescription(description);
 
         // Hide labels on right Y axis
         YAxis rightAxis = lineChart.getAxisRight();
