@@ -102,20 +102,25 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
                 stockPriceHistoryList.add(record);
             }
 
-            // Get owned quantity and last
-            sql = "SELECT uw_quantity, cp_last FROM us__users INNER JOIN us_wallet ON uw_usid = us_id " +
-                   "INNER JOIN cp__company ON cp_id = uw_cpid WHERE us_id = "+userId+" AND cp_ticker = '"+cTicker+"'";
+            // Get owned quantity
+            sql = "SELECT uw_quantity FROM us_wallet INNER JOIN cp__company ON cp_id = uw_cpid WHERE uw_usid = "
+                    +userId+" AND cp_ticker = '"+cTicker+"'";
             resultSet = statement.executeQuery(sql);
 
             Integer ownedQuantity;
+            if (resultSet.next()) ownedQuantity = resultSet.getInt("uw_quantity");
+            else ownedQuantity = 0;
+            ownedQuantityTv.setText(ownedQuantity.toString());
+
+            // Get last price
+            sql = "SELECT cp_last FROM cp__company WHERE cp_ticker = '"+cTicker+"'";
+            resultSet = statement.executeQuery(sql);
 
             if (resultSet.next()) {
-                ownedQuantity = resultSet.getInt("uw_quantity");
                 price = resultSet.getDouble("cp_last");
-
-                ownedQuantityTv.setText(ownedQuantity.toString());
                 priceTv.setText(price.toString());
             }
+
 
         } catch (SQLException throwables) {
             Toast.makeText(this, throwables.getMessage(), Toast.LENGTH_SHORT).show();

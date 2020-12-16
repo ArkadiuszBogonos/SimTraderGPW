@@ -1,10 +1,12 @@
 package com.example.simtradergpw;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simtradergpw.activity.LoansActivity;
 import com.example.simtradergpw.activity.LoginActivity;
+import com.example.simtradergpw.activity.OwnedStocksPieChartActivity;
+import com.example.simtradergpw.activity.RankingActivity;
+import com.example.simtradergpw.activity.SignUpActivity;
+import com.example.simtradergpw.activity.StatisticsActivity;
 
 import java.math.RoundingMode;
 import java.sql.ResultSet;
@@ -25,8 +32,9 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class WalletFragment extends Fragment {
+public class WalletFragment extends Fragment implements View.OnClickListener {
     RecyclerView ownedStocksRecyclerView;
+    private ImageButton openPieChartBtn;
     private TextView uLoginTv, uWalletValueTv, uMoneyTv, uStocksValueTv, uLoanTv;
     private Double userBalance, userLoan, userOwnedStockVal, userWalletValue;
     private Integer userId;
@@ -48,7 +56,6 @@ public class WalletFragment extends Fragment {
 
         return view;
     }
-
 
     private void getDataFromDb() {
         Statement statement = null;
@@ -125,5 +132,14 @@ public class WalletFragment extends Fragment {
         uMoneyTv = view.findViewById(R.id.fr_wallet_money_tv);
         uStocksValueTv = view.findViewById(R.id.fr_wallet_stocks_value_tv);
         uLoanTv = view.findViewById(R.id.fr_wallet_loan_tv);
+
+        openPieChartBtn = view.findViewById(R.id.fr_wallet_piechart_btn);
+        openPieChartBtn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getContext(), OwnedStocksPieChartActivity.class);
+        startActivity(intent);
     }
 }

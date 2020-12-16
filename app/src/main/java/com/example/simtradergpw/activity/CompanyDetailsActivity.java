@@ -133,43 +133,53 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
     public void buyStockBtn(View view) {
         Integer quantity = null;
 
-        try {
-            quantity = Integer.parseInt(quantityEt.getText().toString());
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
 
-        Double totalPrice = quantity * cLast;
+        if(!quantityEt.getText().toString().isEmpty()) {
+            try {
+                quantity = Integer.parseInt(quantityEt.getText().toString());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
-        if (DatabaseCommunication.userHaveEnoughMoney(this, userId, totalPrice)) {
-            DatabaseCommunication.buyStock(this, userId, companyId, quantity, cLast);
-            Toast.makeText(this, "Kupiono akcje!", Toast.LENGTH_SHORT).show();
-            quantityEt.setText("");
+            Double totalPrice = quantity * cLast;
+
+            if (DatabaseCommunication.userHaveEnoughMoney(this, userId, totalPrice)) {
+                DatabaseCommunication.buyStock(this, userId, companyId, quantity, cLast);
+                Toast.makeText(this, "Kupiono akcje!", Toast.LENGTH_SHORT).show();
+                quantityEt.setText("");
+            } else {
+                Toast.makeText(this, "Niewystarczająca ilość gotówki", Toast.LENGTH_SHORT).show();
+            }
+
+            getDataFromDb();
         } else {
-            Toast.makeText(this, "Niewystarczająca ilość gotówki", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Podaj ilość", Toast.LENGTH_SHORT).show();
         }
 
-        getDataFromDb();
     }
 
     public void sellStockBtn(View view) {
         Integer quantity = null;
 
-        try {
-            quantity = Integer.parseInt(quantityEt.getText().toString());
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        if(!quantityEt.getText().toString().isEmpty()) {
+            try {
+                quantity = Integer.parseInt(quantityEt.getText().toString());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
-        if (DatabaseCommunication.userHaveEnoughStocks(this, userId, companyId, quantity)) {
-            DatabaseCommunication.sellStock(this, userId, companyId, quantity, cLast);
-            Toast.makeText(this, "Sprzedano akcje!", Toast.LENGTH_SHORT).show();
-            quantityEt.setText("");
+            if (DatabaseCommunication.userHaveEnoughStocks(this, userId, companyId, quantity)) {
+                DatabaseCommunication.sellStock(this, userId, companyId, quantity, cLast);
+                Toast.makeText(this, "Sprzedano akcje!", Toast.LENGTH_SHORT).show();
+                quantityEt.setText("");
+            } else {
+                Toast.makeText(this, "Nie posiadasz tylu akcji", Toast.LENGTH_SHORT).show();
+            }
+
+            getDataFromDb();
         } else {
-            Toast.makeText(this, "Nie posiadasz tylu akcji", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Podaj ilość", Toast.LENGTH_SHORT).show();
         }
-
-        getDataFromDb();
     }
 
     public void gotoTransactionsHistory(View view) {

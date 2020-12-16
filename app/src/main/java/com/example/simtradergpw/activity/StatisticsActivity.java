@@ -10,12 +10,13 @@ import android.widget.Toast;
 
 import com.example.simtradergpw.ChartData;
 import com.example.simtradergpw.DatabaseConnection;
-import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
-import com.example.simtradergpw.StockRecord;
-import com.example.simtradergpw.Wig20Fragment;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -23,9 +24,9 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,8 +34,7 @@ import java.util.ArrayList;
 
 public class StatisticsActivity extends AppCompatActivity {
 
-    private LineChart wig20LineChart;
-    private PieChart ownedStocksPieChart;
+    private BarChart walletValueBarChart;
     private ArrayList<ChartData> ownedStocksChartData = new ArrayList<>();
     private int userId;
 
@@ -49,9 +49,7 @@ public class StatisticsActivity extends AppCompatActivity {
         userId = sharedPreferences.getInt("userId", 0);
 
         getDataFromDb();
-        drawWig20Chart();
-        drawOwnedStocksPieChart();
-
+        drawWalletValueBarChart();
     }
 
     private void getDataFromDb() {
@@ -85,63 +83,68 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    private void drawWig20Chart(){
-        wig20LineChart.setDragEnabled(false);
-        wig20LineChart.setScaleEnabled(false);
+//    private void drawWig20Chart(){
+//        wig20LineChart.setDragEnabled(false);
+//        wig20LineChart.setScaleEnabled(false);
+//
+//        // Add data
+//        ArrayList<Entry> chartValues = new ArrayList<>();
+//
+//        for (int i = 0; i < 20; i++) {
+//            chartValues.add(new Entry(i, i));
+//        }
+//
+//        LineDataSet set1 = new LineDataSet(chartValues, "Wartość akcji");
+//
+//        set1.setFillAlpha(110);
+//        set1.setColor(ContextCompat.getColor(this, R.color.colorBlue));
+//        set1.setDrawCircles(true);
+//        set1.setDrawValues(false);
+//
+//
+//        set1.setHighlightEnabled(true);
+//        set1.setDrawHighlightIndicators(true);
+//
+//
+//
+//        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+//        dataSets.add(set1);
+//
+//        LineData data = new LineData(dataSets);
+//
+//        wig20LineChart.setData(data);
+//    }
 
-        // Add data
-        ArrayList<Entry> chartValues = new ArrayList<>();
+    private void drawWalletValueBarChart(){
+        ArrayList<BarEntry> months = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
-            chartValues.add(new Entry(i, i));
-        }
+        // add data
+        months.add(new BarEntry(1, 10000));
+        months.add(new BarEntry(2, 8632));
+        months.add(new BarEntry(3, 11233));
+        months.add(new BarEntry(4, 16399));
+        months.add(new BarEntry(5, 20300));
+        months.add(new BarEntry(6, 19400));
+        months.add(new BarEntry(7, 17999));
+        months.add(new BarEntry(8, 22126));
+        months.add(new BarEntry(9, 26444));
+        months.add(new BarEntry(10, 18399));
+        months.add(new BarEntry(11, 19033));
+        months.add(new BarEntry(12, 20500));
 
-        LineDataSet set1 = new LineDataSet(chartValues, "Wartość akcji");
+        BarDataSet barDataSet = new BarDataSet(months, "");
+        barDataSet.setColors(getColor(R.color.colorBlue));
 
-        set1.setFillAlpha(110);
-        set1.setColor(ContextCompat.getColor(this, R.color.colorBlue));
-        set1.setDrawCircles(true);
-        set1.setDrawValues(false);
+        BarData barData = new BarData(barDataSet);
 
-
-        set1.setHighlightEnabled(true);
-        set1.setDrawHighlightIndicators(true);
-
-
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        LineData data = new LineData(dataSets);
-
-        wig20LineChart.setData(data);
-    }
-
-    private void drawOwnedStocksPieChart(){
-        // Add data
-        ArrayList<PieEntry> chartValues = new ArrayList<>();
-
-        for (int i = 0; i < ownedStocksChartData.size(); i++) {
-            String ticker = ownedStocksChartData.get(i).getTicker();
-            Float value = ownedStocksChartData.get(i).getPrice().floatValue();
-            chartValues.add(new PieEntry(value, ticker));
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(chartValues, "");
-        pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
-        PieData pieData = new PieData(pieDataSet);
-        pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f);
-
-        ownedStocksPieChart.setData(pieData);
-        ownedStocksPieChart.getDescription().setEnabled(false);
-        ownedStocksPieChart.setCenterText("Posiadane akcje");
-        ownedStocksPieChart.animateXY(500, 500);
+        walletValueBarChart.setFitBars(true);
+        walletValueBarChart.setData(barData);
+        walletValueBarChart.getDescription().setText("");
+        walletValueBarChart.animateY(1000);
     }
 
 
     private void connectVariablesToGui() {
-        wig20LineChart = findViewById(R.id.act_stats_wig20_LinChart);
-        ownedStocksPieChart = findViewById(R.id.act_stats_ownedStocks_pieChart);
+        walletValueBarChart = findViewById(R.id.act_stats_walletValue_montly_barChart);
     }
 }
