@@ -15,15 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.example.simtradergpw.ChartData;
+import com.example.simtradergpw.ChartDataStock;
 import com.example.simtradergpw.DatabaseCommunication;
 import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -32,11 +30,9 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +47,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
     private Integer userId, companyId, ownedQuantity;
     private LineChart mLineChart;
 
-    ArrayList<ChartData> stockPriceHistoryList = new ArrayList<>();
+    ArrayList<ChartDataStock> stockPriceHistoryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +236,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
                 Double price = resultSet.getDouble("ch_price");
                 String timeStamp = resultSet.getString("ch_timestamp");
 
-                ChartData record = new ChartData(price, timeStamp);
+                ChartDataStock record = new ChartDataStock(price, timeStamp);
                 stockPriceHistoryList.add(record);
             }
 
@@ -268,9 +264,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
     /* ######### Draw chart ######### */
     private void drawChart(){
-        mLineChart.setOnChartValueSelectedListener(this);
-        mLineChart.setDragEnabled(false);
+        // Disable chart scaling
         mLineChart.setScaleEnabled(false);
+        // Animate X axis data
         mLineChart.animateX(1000);
 
         // Set chart description
@@ -279,13 +275,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
         mLineChart.setDescription(description);
 
         // Hide labels on right Y axis
-        YAxis rightAxis = mLineChart.getAxisRight();
-        rightAxis.setDrawLabels(false);
+        mLineChart.getAxisRight().setDrawLabels(false);
 
         // Display date on X axis
-        XAxis xAxis = mLineChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(getDate()));
-
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getDate()));
 
         // Add data
         ArrayList<Entry> chartValues = new ArrayList<>();
@@ -302,7 +295,6 @@ public class CompanyDetailsActivity extends AppCompatActivity implements OnChart
 
         set1.setHighlightEnabled(true);
         set1.setDrawHighlightIndicators(true);
-
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);

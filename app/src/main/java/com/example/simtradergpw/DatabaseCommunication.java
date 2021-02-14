@@ -120,6 +120,13 @@ public final class DatabaseCommunication {
 
             String sql = "UPDATE us__users SET us_balance = us_balance+"+amount+", us_loan = "+amount+", us_loan_payment_date='"+paymentDate+"'  WHERE us_id="+userId;
             statement.executeUpdate(sql);
+
+            Double commission = amount * LoansActivity.INTEREST_RATE;
+
+            sql = "INSERT INTO us_loans VALUES ("+userId+", "+amount+", "+commission+", '"+paymentDate+"')";
+            Toast.makeText(context, sql, Toast.LENGTH_LONG).show();
+            statement.executeUpdate(sql);
+
             Toast.makeText(context, "Zaciągnięto " + amount+ "PLN pożyczki", Toast.LENGTH_LONG).show();
 
         } catch (SQLException throwables) {
@@ -148,10 +155,13 @@ public final class DatabaseCommunication {
     }
 
     public static void addNewUser(Context context, String uLogin, String uEmail, String uPassword) {
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+
         try {
             statement = DatabaseConnection.getConnection().createStatement();
 
-            String sqlAddNewUser = "INSERT INTO us__users VALUES ('" + uLogin + "', '" + uEmail + "', '" + uPassword + "', " + START_BALANCE + ", NULL, NULL, 0, NULL, 0)";
+            String sqlAddNewUser = "INSERT INTO us__users VALUES ('" + uLogin + "', '" + uEmail + "', '"
+                    + uPassword + "', " + START_BALANCE + ", 0, NULL, NULL, 0, '"+timeStamp+"', 0)";
             statement.executeUpdate(sqlAddNewUser);
 
         } catch (SQLException throwables) {
@@ -166,8 +176,11 @@ public final class DatabaseCommunication {
             statement= DatabaseConnection.getConnection().createStatement();
 
             String sql = "UPDATE us__users SET us_balance = 10000, us_loan = 0, us_owned_stocks_value = 0," +
-                    " us_loan_payment_date = NULL, us_paid_loans = 0 WHERE us_id="+userId;
+                    " us_loan_payment_date = NULL, us_paid_loans = 0, us_session_start='"+timeStamp+
+                    "', us_num_of_restarts = us_num_of_restarts + 1 WHERE us_id="+userId;
             statement.executeUpdate(sql);
+
+
 
             sql = "DELETE FROM us_wallet WHERE uw_usid = " + userId;
             statement.executeUpdate(sql);
@@ -176,6 +189,9 @@ public final class DatabaseCommunication {
             statement.executeUpdate(sql);
 
             sql = "DELETE FROM us_wallet_value_h WHERE uwh_usid = " + userId;
+            statement.executeUpdate(sql);
+
+            sql = "DELETE FROM us_loans WHERE ul_usid = " + userId;
             statement.executeUpdate(sql);
 
 

@@ -78,6 +78,9 @@
     <string name="quantity">Ilość</string>
     <string name="estimated_value">Szacowana wartość</string>
     <string name="owned_quantity_colon">Ilość w portfelu:</string>
+    <string name="company_details">Szczegóły spółki</string>
+    <string name="buy">Kupno</string>
+    <string name="sell">Sprzedaż</string>
 
     <!--Currencies-->
     <string name="pln_sufix">PLN</string>

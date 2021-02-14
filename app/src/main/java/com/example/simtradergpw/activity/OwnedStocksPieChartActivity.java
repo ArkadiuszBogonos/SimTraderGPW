@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.simtradergpw.ChartData;
+import com.example.simtradergpw.ChartDataStock;
 import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,8 +22,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class OwnedStocksPieChartActivity extends AppCompatActivity {
+    int[] PIE_CHART_COLORS = {
+            Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
+            Color.rgb(191, 134, 134), Color.rgb(179, 48, 80), Color.rgb(72, 181, 163),
+            Color.rgb(133, 202, 93),Color.rgb(193, 179, 193),
+    };
+
     private PieChart ownedStocksPieChart;
-    private ArrayList<ChartData> ownedStocksChartData = new ArrayList<>();
+    private ArrayList<ChartDataStock> ownedStocksChartData = new ArrayList<>();
     int userId;
 
     @Override
@@ -59,7 +65,7 @@ public class OwnedStocksPieChartActivity extends AppCompatActivity {
                 Double ownedStockValue = currentPrice * ownedQuantity;
 
 
-                ChartData ownedStock = new ChartData(ticker, ownedStockValue);
+                ChartDataStock ownedStock = new ChartDataStock(ticker, ownedStockValue);
                 ownedStocksChartData.add(ownedStock);
             }
 
@@ -82,7 +88,8 @@ public class OwnedStocksPieChartActivity extends AppCompatActivity {
         }
 
         PieDataSet pieDataSet = new PieDataSet(chartValues, "");
-        pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        ColorTemplate ct = new ColorTemplate();
+        pieDataSet.setColors(PIE_CHART_COLORS);
         PieData pieData = new PieData(pieDataSet);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);

@@ -20,13 +20,14 @@ public final class DatabaseConnection {
     public static boolean isConnectionSetCorrectly = false;
 
     public static void setConnection() {
- 
-        databaseName = "SimTraderGPW";
-        databaseInstance = "MYSQLSERVER";
-        databaseLogin = "test";
-        databasePassword = "test";
+
         databaseIp = "192.168.0.102";
         databasePort = "1433";
+        databaseInstance = "MYSQLSERVER";
+        databaseName = "SimTraderGPW";
+        databaseLogin = "test";
+        databasePassword = "test";
+
 
         databaseUrl = "jdbc:jtds:sqlserver://" + databaseIp + ":" + databasePort + "/" + databaseName;
 //        databaseUrl = "jdbc:jtds:sqlserver://" + databaseIp + ":" + databasePort + "/" + databaseName

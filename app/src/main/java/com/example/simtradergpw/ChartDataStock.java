@@ -2,19 +2,19 @@ package com.example.simtradergpw;
 
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 
-public class ChartData {
+public class ChartDataStock {
 
     private String ticker;
     private Double price;
     private String date;
 
-    public ChartData(Double price, String date) {
+    public ChartDataStock(Double price, String date) {
         this.ticker = null;
         this.price = price;
         this.date = date;
     }
 
-    public ChartData(String ticker, Double price) {
+    public ChartDataStock(String ticker, Double price) {
         this.ticker = ticker;
         this.price = price;
         this.date = null;

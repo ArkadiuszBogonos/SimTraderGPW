@@ -49,7 +49,7 @@ public class WalletOwnedStocksRecyclerViewAdapter extends RecyclerView.Adapter<W
         holder.nameTv.setText(sName);
         holder.tickerTv.setText(sTicker);
         holder.quantityTv.setText(quantity.toString());
-        holder.estimatedValueTv.setText(doubleToTwoDecimal(estimatedValue) + " PLN");
+        holder.estimatedValueTv.setText(FormatHelper.doubleToTwoDecimal(estimatedValue) + " PLN");
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +78,5 @@ public class WalletOwnedStocksRecyclerViewAdapter extends RecyclerView.Adapter<W
             estimatedValueTv = itemView.findViewById(R.id.adapter_owned_stocks_estimated_value_tv);
             mainLayout = itemView.findViewById(R.id.adapter_owned_stocks_main_layout);
         }
-    }
-
-    /* ######### Other functions ######### */
-    private String doubleToTwoDecimal(Double number) {
-        // Format Double to two decimal places
-        DecimalFormat df = new DecimalFormat("0.00");
-        df.setRoundingMode(RoundingMode.DOWN);
-        return df.format(number);
     }
 }

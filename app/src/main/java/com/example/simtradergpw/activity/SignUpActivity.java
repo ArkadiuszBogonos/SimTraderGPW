@@ -32,18 +32,12 @@ public class SignUpActivity extends AppCompatActivity {
     // Password requirements
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    "(?=.*[0-9])" +           //at least 1 digit
-//                    "(?=.*[a-z])" +         //at least 1 lower case letter
-//                    "(?=.*[A-Z])" +         //at least 1 upper case letter
-                    "(?=.*[a-zA-Z])" +        //any letter
-//                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
-                    "(?=\\S+$)" +             //no white spaces
-                    ".{" + PASSWORD_MIN_CHARACTERS + ",}" +                 //at least 5 characters
+                    "(?=.*[0-9])" +                             //at least 1 digit
+                    "(?=.*[a-zA-Z])" +                          //any letter
+                    "(?=\\S+$)" +                               //no white spaces
+                    ".{" + PASSWORD_MIN_CHARACTERS + ",}" +     //at least x characters
                     "$");
 
-
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +96,6 @@ public class SignUpActivity extends AppCompatActivity {
             return true;
 
         }
-
     }
 
     private boolean validatePassword() {

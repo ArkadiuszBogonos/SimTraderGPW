@@ -1,6 +1,5 @@
 package com.example.simtradergpw;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simtradergpw.activity.LoansActivity;
 import com.example.simtradergpw.activity.LoginActivity;
-import com.example.simtradergpw.activity.MainActivity;
 import com.example.simtradergpw.activity.RankingActivity;
 import com.example.simtradergpw.activity.StatisticsActivity;
 import com.example.simtradergpw.dialogs.ResetProgressDialog;
@@ -46,7 +44,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     LineChart walletValueLineChart;
     TextView loginTv;
     Button loansBtn, statsBtn, rankBtn, resetBtn;
-    ArrayList<ChartData> userBalanceHistoryList = new ArrayList<>();
+    ArrayList<ChartDataStock> userBalanceHistoryList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -83,7 +81,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Double price = resultSet.getDouble("uwh_value");
                 String timeStamp = resultSet.getString("uwh_timestamp");
 
-                ChartData record = new ChartData(price, timeStamp);
+                ChartDataStock record = new ChartDataStock(price, timeStamp);
                 userBalanceHistoryList.add(record);
             }
 
@@ -96,7 +94,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
     /* ######### Draw chart ######### */
-    private void drawLineChart(LineChart lineChart, ArrayList<ChartData> chartDataArrayList, String label){
+    private void drawLineChart(LineChart lineChart, ArrayList<ChartDataStock> chartDataArrayList, String label){
         lineChart.setDragEnabled(false);
         lineChart.setScaleEnabled(false);
         lineChart.animateX(1000);
@@ -137,7 +135,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     // Function that is used to format X axis on the chart
-    private ArrayList<String> getDate(ArrayList<ChartData> chartDataArrayList) {
+    private ArrayList<String> getDate(ArrayList<ChartDataStock> chartDataArrayList) {
         SimpleDateFormat formatFromDatabase = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM");
 

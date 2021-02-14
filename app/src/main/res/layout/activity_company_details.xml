@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="KGH"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_title_background" />
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_title_background"
+        tools:text="KGH" />
 
     <TextView
         android:id="@+id/act_cdetails_cname_tv"
@@ -33,27 +33,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:text="KGHM Polska Miedź SA"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_ticker_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/act_cdetails_ticker_tv"
+        tools:text="KGHM Polska Miedź SA" />
 
     <TextView
         android:id="@+id/act_cdetails_last_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="1dp"
-        android:text="143,60"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_ticker_tv"
         app:layout_constraintEnd_toStartOf="@+id/act_cdetails_currency"
-        app:layout_constraintTop_toTopOf="@+id/act_cdetails_ticker_tv" />
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_ticker_tv"
+        tools:text="143,60" />
 
     <TextView
         android:id="@+id/act_cdetails_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="PLN"
+        android:text="@string/pln_sufix"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_last_tv"
         app:layout_constraintEnd_toStartOf="@+id/act_cdetails_pchange_tv"
@@ -63,12 +63,12 @@
         android:id="@+id/act_cdetails_pchange_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1,84%"
         android:textColor="@color/colorPrimaryLight"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_currency"
         app:layout_constraintEnd_toStartOf="@+id/act_cdetails_change_symbol_view"
-        app:layout_constraintTop_toTopOf="@+id/act_cdetails_currency" />
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_currency"
+        tools:text="1,84%" />
 
     <View
         android:id="@+id/act_cdetails_change_symbol_view"
@@ -106,10 +106,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text=" 16"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_owned_tv"
         app:layout_constraintStart_toEndOf="@+id/act_cdetails_owned_tv"
-        app:layout_constraintTop_toTopOf="@+id/act_cdetails_owned_tv" />
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_owned_tv"
+        tools:text=" 16" />
 
     <View
         android:id="@+id/act_cdetails_title_background"
@@ -124,7 +124,7 @@
         android:id="@+id/act_cdetails_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Szczegóły spółki"
+        android:text="@string/company_details"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:hint="Ilość"
+        android:hint="@string/quantity"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/act_cdetails_buy_btn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +152,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/btn_default_normal"
         android:onClick="buyStockBtn"
-        android:text="Kupno"
+        android:text="@string/buy"
         android:textColor="@color/colorDelicateGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,7 +166,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/btn_default_normal"
         android:onClick="sellStockBtn"
-        android:text="Sprzedaż"
+        android:text="@string/sell"
         android:textColor="@color/colorDelicateGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/act_cdetails_buy_btn"
@@ -178,17 +178,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="2870,20"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_owned_num_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/act_cdetails_owned_num_tv" />
+        app:layout_constraintTop_toTopOf="@+id/act_cdetails_owned_num_tv"
+        tools:text="2870,20" />
 
     <TextView
         android:id="@+id/act_cdetails_estimated_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
-        android:text="Szacowana wartość:"
+        android:text="@string/estimated_value"
         app:layout_constraintBottom_toBottomOf="@+id/act_cdetails_estimated_num_tv"
         app:layout_constraintEnd_toStartOf="@+id/act_cdetails_estimated_num_tv"
         app:layout_constraintTop_toTopOf="@+id/act_cdetails_estimated_num_tv" />
@@ -215,7 +215,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4">
-
     </com.github.mikephil.charting.charts.LineChart>
 
     <View

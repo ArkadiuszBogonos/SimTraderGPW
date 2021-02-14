@@ -28,4 +28,9 @@ public final class FormatHelper {
         decimal = decimal * 100;
         return decimal.toString() + "%";
     }
+
+    public static String doubleToPercent(Double decimal, Integer precision) {
+        decimal = decimal * 100;
+        return String.format("%."+precision+"f", decimal) + "%";
+    }
 }

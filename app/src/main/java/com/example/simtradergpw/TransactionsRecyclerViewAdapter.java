@@ -1,6 +1,7 @@
 package com.example.simtradergpw;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.simtradergpw.activity.SingleCompanyTransactionsActivity;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -59,6 +62,15 @@ public class TransactionsRecyclerViewAdapter extends RecyclerView.Adapter<Transa
             holder.directionTv.setText("Sprzedaż");
             holder.directionSymblView.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_baseline_sell_24, null));
         }
+
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SingleCompanyTransactionsActivity.class);
+                intent.putExtra("ticker", sTicker);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -68,10 +68,7 @@ public class Wig20RecyclerViewAdapter extends RecyclerView.Adapter<Wig20Recycler
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CompanyDetailsActivity.class);
-//                intent.putExtra("name", sName);
                 intent.putExtra("ticker", sTicker);
-//                intent.putExtra("last", sLast.toString());
-//                intent.putExtra("pChange", sPercentageChange.toString());
                 context.startActivity(intent);
             }
         });

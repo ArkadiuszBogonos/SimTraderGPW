@@ -118,15 +118,13 @@ public class LoginActivity extends AppCompatActivity {
             ResultSet resultIsUser = statement.executeQuery(sqlIsUser);
 
             if (resultIsUser.next()){
-                String userLogin, userFName, userLName, userEmail;
+                String userLogin, userEmail;
                 Float userBalance;
                 Integer userId;
 
                 userId = resultIsUser.getInt("us_id");
                 userLogin = resultIsUser.getString("us_login");
                 userEmail = resultIsUser.getString("us_email");
-                userFName = resultIsUser.getString("us_fname");
-                userLName = resultIsUser.getString("us_lname");
                 userBalance = resultIsUser.getFloat("us_balance");
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -134,8 +132,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putInt("userId", userId);
                 editor.putString("userLogin", userLogin);
                 editor.putString("userEmail", userEmail);
-                editor.putString("userFName", userFName);
-                editor.putString("userLName", userLName);
                 editor.putFloat("userBalance", userBalance);
                 editor.apply();
 
@@ -189,7 +185,6 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.act_login_et_password);
         mLoginErrorTV = findViewById(R.id.act_login_tv_login_error);
         mPasswordErrorTV = findViewById(R.id.act_login_tv_password_error);
-
         mProgressBar = findViewById(R.id.act_login_circuralProgressBar);
     }
 

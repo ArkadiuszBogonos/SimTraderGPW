@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.simtradergpw.ChartData;
+import com.example.simtradergpw.ChartDataStock;
 import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
@@ -24,11 +24,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,12 +35,12 @@ import java.util.ArrayList;
 
 public class SingleCompanyTransactionsActivity extends AppCompatActivity {
     private ArrayList<StockRecord> uTransactionHistory = new ArrayList<>();
-    ArrayList<ChartData> stockPriceHistoryList = new ArrayList<>();
+    ArrayList<ChartDataStock> stockPriceHistoryList = new ArrayList<>();
     private RecyclerView transactionHistoryRecyclerView;
     private LineChart mLineChart;
     private TextView investedTv, balanceTv, ownedQuantityTv, priceTv;
     private String cTicker;
-    private int userId;
+    private Integer userId, ownedQuantity;
     private Double price;
 
     @Override
@@ -80,12 +77,12 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
             while (resultSet.next()) {
                 String name = resultSet.getString("cp_name");
                 String ticker = resultSet.getString("cp_ticker");
-                Integer ownedQuantity = resultSet.getInt("ut_quantity");
+                Integer quantity = resultSet.getInt("ut_quantity");
                 Boolean isBuy = resultSet.getBoolean("ut_is_buy");
                 String timeStamp = resultSet.getString("ut_timestamp");
                 Double last = resultSet.getDouble("ut_price_per_stock");
 
-                StockRecord record = new StockRecord(name, ticker, last, null, ownedQuantity, timeStamp, isBuy);
+                StockRecord record = new StockRecord(name, ticker, last, null, quantity, timeStamp, isBuy);
                 uTransactionHistory.add(record);
             }
 
@@ -98,7 +95,7 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
                 Double price = resultSet.getDouble("ch_price");
                 String timeStamp = resultSet.getString("ch_timestamp");
 
-                ChartData record = new ChartData(price, timeStamp);
+                ChartDataStock record = new ChartDataStock(price, timeStamp);
                 stockPriceHistoryList.add(record);
             }
 
@@ -107,9 +104,8 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
                     +userId+" AND cp_ticker = '"+cTicker+"'";
             resultSet = statement.executeQuery(sql);
 
-            Integer ownedQuantity;
+            ownedQuantity = 0;
             if (resultSet.next()) ownedQuantity = resultSet.getInt("uw_quantity");
-            else ownedQuantity = 0;
             ownedQuantityTv.setText(ownedQuantity.toString());
 
             // Get last price
@@ -224,12 +220,10 @@ public class SingleCompanyTransactionsActivity extends AppCompatActivity {
             }
         }
 
-        balance = sold - invested;
+        balance = sold - invested + (ownedQuantity * price);
 
         investedTv.setText(FormatHelper.cutAfterDot(invested));
         balanceTv.setText(FormatHelper.cutAfterDot(balance));
-
-
     }
 
     private void connectVariablesToGui() {

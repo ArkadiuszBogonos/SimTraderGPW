@@ -92,24 +92,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/act_stats_score_perc_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="26,8%"
             android:textColor="@color/colorTrendingUp"
             app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/textView9" />
+            app:layout_constraintTop_toTopOf="@+id/textView9"
+            tools:text="26,8%" />
 
         <View
-            android:id="@+id/view5"
+            android:id="@+id/act_stats_score_perc_arrow"
             android:layout_width="25dp"
             android:layout_height="0dp"
             android:background="@drawable/ic_baseline_arrow_drop_up_green_24"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/textView14" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_score_perc_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_score_perc_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_score_perc_tv" />
 
         <TextView
             android:id="@+id/textView17"
@@ -121,14 +121,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/act_stats_session_start_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="06.01.2020"
             app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintStart_toEndOf="@+id/textView17"
-            app:layout_constraintTop_toTopOf="@+id/textView17" />
+            app:layout_constraintTop_toTopOf="@+id/textView17"
+            tools:text="06.01.2020" />
 
         <TextView
             android:id="@+id/textView22"
@@ -138,7 +138,7 @@
             android:text="Portfel"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textView15"
+            app:layout_constraintEnd_toEndOf="@+id/act_stats_turnover_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/textView26" />
@@ -153,14 +153,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/act_stats_turnover_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="68 700 980 PLN"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13" />
+            app:layout_constraintTop_toTopOf="@+id/textView13"
+            tools:text="68 700 980" />
 
         <TextView
             android:id="@+id/textView23"
@@ -199,25 +199,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
         <TextView
-            android:id="@+id/textView27"
+            android:id="@+id/act_stats_num_of_restarts_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="0"
             app:layout_constraintBottom_toBottomOf="@+id/textView26"
             app:layout_constraintStart_toEndOf="@+id/textView26"
             app:layout_constraintTop_toTopOf="@+id/textView26" />
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/act_stats_balance_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="10000"
             android:textColor="@color/colorTrendingUp"
             app:layout_constraintBottom_toBottomOf="@+id/textView23"
             app:layout_constraintStart_toEndOf="@+id/textView23"
-            app:layout_constraintTop_toTopOf="@+id/textView23" />
+            app:layout_constraintTop_toTopOf="@+id/textView23"
+            tools:text="10000" />
 
         <TextView
             android:id="@+id/textView30"
@@ -225,20 +224,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="@string/pln_sufix"
-            app:layout_constraintBottom_toBottomOf="@+id/textView29"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/textView29" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_balance_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_balance_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_balance_tv" />
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/act_stats_stock_val_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="3605"
             android:textColor="@color/colorTrendingUp"
             app:layout_constraintBottom_toBottomOf="@+id/textView24"
             app:layout_constraintStart_toEndOf="@+id/textView24"
-            app:layout_constraintTop_toTopOf="@+id/textView24" />
+            app:layout_constraintTop_toTopOf="@+id/textView24"
+            tools:text="3605" />
 
         <TextView
             android:id="@+id/textView32"
@@ -246,20 +245,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="@string/pln_sufix"
-            app:layout_constraintBottom_toBottomOf="@+id/textView31"
-            app:layout_constraintStart_toEndOf="@+id/textView31"
-            app:layout_constraintTop_toTopOf="@+id/textView31" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_stock_val_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_stock_val_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_stock_val_tv" />
 
         <TextView
-            android:id="@+id/textView33"
+            android:id="@+id/act_stats_loans_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="2000"
             android:textColor="@color/colorTrendingDown"
             app:layout_constraintBottom_toBottomOf="@+id/textView25"
             app:layout_constraintStart_toEndOf="@+id/textView25"
-            app:layout_constraintTop_toTopOf="@+id/textView25" />
+            app:layout_constraintTop_toTopOf="@+id/textView25"
+            tools:text="2000" />
 
         <TextView
             android:id="@+id/textView34"
@@ -267,9 +266,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="@string/pln_sufix"
-            app:layout_constraintBottom_toBottomOf="@+id/textView33"
-            app:layout_constraintStart_toEndOf="@+id/textView33"
-            app:layout_constraintTop_toTopOf="@+id/textView33" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_loans_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_loans_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_loans_tv" />
 
         <TextView
             android:id="@+id/textView35"
@@ -292,15 +291,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/act_stats_sum_of_paid_loans_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="125 000"
             android:textColor="@color/colorTrendingDown"
             app:layout_constraintBottom_toBottomOf="@+id/textView36"
             app:layout_constraintStart_toEndOf="@+id/textView36"
-            app:layout_constraintTop_toTopOf="@+id/textView36" />
+            app:layout_constraintTop_toTopOf="@+id/textView36"
+            tools:text="125 000" />
 
         <TextView
             android:id="@+id/textView38"
@@ -308,9 +307,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="@string/pln_sufix"
-            app:layout_constraintBottom_toBottomOf="@+id/textView37"
-            app:layout_constraintStart_toEndOf="@+id/textView37"
-            app:layout_constraintTop_toTopOf="@+id/textView37" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_sum_of_paid_loans_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_sum_of_paid_loans_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_sum_of_paid_loans_tv" />
 
         <TextView
             android:id="@+id/textView39"
@@ -322,24 +321,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
         <TextView
-            android:id="@+id/textView40"
+            android:id="@+id/act_stats_loans_commision_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="2500"
             android:textColor="@color/colorTrendingDown"
             app:layout_constraintBottom_toBottomOf="@+id/textView39"
             app:layout_constraintStart_toEndOf="@+id/textView39"
-            app:layout_constraintTop_toTopOf="@+id/textView39" />
+            app:layout_constraintTop_toTopOf="@+id/textView39"
+            tools:text="2500" />
 
         <TextView
             android:id="@+id/textView41"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pln_sufix"
-            app:layout_constraintBottom_toBottomOf="@+id/textView40"
-            app:layout_constraintStart_toEndOf="@+id/textView40"
-            app:layout_constraintTop_toTopOf="@+id/textView40" />
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_loans_commision_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_loans_commision_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_loans_commision_tv" />
 
         <TextView
             android:id="@+id/textView42"
@@ -353,14 +352,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
         <TextView
-            android:id="@+id/textView43"
+            android:id="@+id/act_stats_num_of_paid_loans_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="6"
             app:layout_constraintBottom_toBottomOf="@+id/textView42"
             app:layout_constraintStart_toEndOf="@+id/textView42"
-            app:layout_constraintTop_toTopOf="@+id/textView42" />
+            app:layout_constraintTop_toTopOf="@+id/textView42"
+            tools:text="6" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/pln_sufix"
+            app:layout_constraintBottom_toBottomOf="@+id/act_stats_turnover_tv"
+            app:layout_constraintStart_toEndOf="@+id/act_stats_turnover_tv"
+            app:layout_constraintTop_toTopOf="@+id/act_stats_turnover_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

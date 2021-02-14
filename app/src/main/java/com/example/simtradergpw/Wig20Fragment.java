@@ -39,13 +39,10 @@ public class Wig20Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wig20list, container, false);
-
         wig20RecyclerView = view.findViewById(R.id.fr_wig20_recyclerview);
 
         Thread t = new Thread(mWig20Updater);
         t.start();
-
-
 
         return view;
     }
