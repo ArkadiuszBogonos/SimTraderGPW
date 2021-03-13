@@ -16,9 +16,14 @@ import com.example.simtradergpw.DatabaseConnection;
 import com.example.simtradergpw.FormatHelper;
 import com.example.simtradergpw.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -72,7 +77,7 @@ public class StatisticsActivity extends AppCompatActivity {
             Integer numOfRestarts = resultSet.getInt("us_num_of_restarts");
             String sessionStart = resultSet.getDate("us_session_start").toString();
 
-            Double scorePercentage = ((balance + stocksValue - DatabaseCommunication.START_BALANCE) / DatabaseCommunication.START_BALANCE);
+            Double scorePercentage = ((balance + stocksValue - loan - DatabaseCommunication.START_BALANCE) / DatabaseCommunication.START_BALANCE);
 
             scorePercentageTv.setText(FormatHelper.doubleToPercent(scorePercentage, 2));
             if (scorePercentage > 0) {
@@ -156,51 +161,26 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    private void drawWalletValueBarChart() {
-        ArrayList<BarEntry> records = new ArrayList<>();
-
-
-        for (int i = 0; i < walletValsMonthly.size(); i++) {
-            ChartDataXY chartData = walletValsMonthly.get(i);
-
-            String x = chartData.getX().replace(',', '.');
-            Float value = Float.parseFloat(x);
-
-            String y = chartData.getY().replace(',', '.');
-            Float month = Float.parseFloat(y);
-
-            records.add(new BarEntry(month, value));
-        }
-
-
-        BarDataSet barDataSet = new BarDataSet(records, "");
-        barDataSet.setColors(getColor(R.color.colorBlue));
-
-        BarData barData = new BarData(barDataSet);
-
-        walletValueBarChart.setFitBars(true);
-        walletValueBarChart.setData(barData);
-        walletValueBarChart.getDescription().setText("");
-        walletValueBarChart.animateY(1000);
-    }
-
 //    private void drawWalletValueBarChart() {
-//        ArrayList<BarEntry> months = new ArrayList<>();
+//        ArrayList<BarEntry> records = new ArrayList<>();
 //
-//        months.add(new BarEntry(1, 10000));
-//        months.add(new BarEntry(2, 8632));
-//        months.add(new BarEntry(3, 11233));
-//        months.add(new BarEntry(4, 16399));
-//        months.add(new BarEntry(5, 20300));
-//        months.add(new BarEntry(6, 19400));
-//        months.add(new BarEntry(7, 17999));
-//        months.add(new BarEntry(8, 22126));
-//        months.add(new BarEntry(9, 26444));
-//        months.add(new BarEntry(10, 18399));
-//        months.add(new BarEntry(11, 19033));
-//        months.add(new BarEntry(12, 20500));
+//        for (int j = 0; j < 12; j++) {
 //
-//        BarDataSet barDataSet = new BarDataSet(months, "");
+//        }
+//        for (int i = 0; i < walletValsMonthly.size(); i++) {
+//            ChartDataXY chartData = walletValsMonthly.get(i);
+//
+//            String x = chartData.getX().replace(',', '.');
+//            Float value = Float.parseFloat(x);
+//
+//            String y = chartData.getY().replace(',', '.');
+//            Float month = Float.parseFloat(y);
+//
+//            records.add(new BarEntry(month, value));
+//        }
+//
+//
+//        BarDataSet barDataSet = new BarDataSet(records, "");
 //        barDataSet.setColors(getColor(R.color.colorBlue));
 //
 //        BarData barData = new BarData(barDataSet);
@@ -210,6 +190,66 @@ public class StatisticsActivity extends AppCompatActivity {
 //        walletValueBarChart.getDescription().setText("");
 //        walletValueBarChart.animateY(1000);
 //    }
+//
+    private void drawWalletValueBarChart() {
+        // Disable chart scaling
+        walletValueBarChart.setScaleEnabled(false);
+
+        // Animate X axis data
+        walletValueBarChart.animateY(1000);
+
+        // Set chart description
+        Description description = new Description();
+        description.setText(" ");
+        walletValueBarChart.setDescription(description);
+
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+        xAxisLabel.add("");
+        xAxisLabel.add("I");
+        xAxisLabel.add("II");
+        xAxisLabel.add("III");
+        xAxisLabel.add("IV");
+        xAxisLabel.add("V");
+        xAxisLabel.add("VI");
+        xAxisLabel.add("VII");
+        xAxisLabel.add("VIII");
+        xAxisLabel.add("IX");
+        xAxisLabel.add("X");
+        xAxisLabel.add("XI");
+        xAxisLabel.add("XII");
+
+        // X axis label formatter
+        walletValueBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
+        walletValueBarChart.getXAxis().setLabelCount(12);
+
+        // Hide labels on right Y axis
+        walletValueBarChart.getAxisLeft().setDrawLabels(false);
+
+
+        ArrayList<BarEntry> months = new ArrayList<>();
+        months.add(new BarEntry(1, 9321));
+        months.add(new BarEntry(2, 8632));
+        months.add(new BarEntry(3, 11233));
+        months.add(new BarEntry(4, 16399));
+        months.add(new BarEntry(5, 20300));
+        months.add(new BarEntry(6, 19400));
+        months.add(new BarEntry(7, 17999));
+        months.add(new BarEntry(8, 18126));
+        months.add(new BarEntry(9, 20444));
+        months.add(new BarEntry(10, 18399));
+        months.add(new BarEntry(11, 19033));
+        months.add(new BarEntry(12, 20500));
+
+        BarDataSet barDataSet = new BarDataSet(months, "");
+        barDataSet.setColors(getColor(R.color.colorBlue));
+
+        BarData barData = new BarData(barDataSet);
+
+        walletValueBarChart.setFitBars(true);
+        walletValueBarChart.setData(barData);
+        walletValueBarChart.getDescription().setText("");
+        walletValueBarChart.animateY(1000);
+    }
 
 
     private void connectVariablesToGui() {
